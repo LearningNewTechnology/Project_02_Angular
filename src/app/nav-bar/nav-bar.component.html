@@ -1,17 +1,25 @@
-<div class="container">
-    <mat-toolbar>
-        <a class="navbar-brand" routerLink=''>
-            <h3>FaceYourBookSpace</h3>
-        </a>
-        <span style=" flex: 1 1 auto;"> <input matInput placeholder=" Search"></span>
-        <button mat-button type="button" *ngIf='loggedin' [matMenuTriggerFor]="menu">
-            <mat-icon>reorder</mat-icon>
-        </button>
-        <mat-menu #menu>
-            <button mat-menu-item routerLink='account'>Account</button>
-            <button mat-menu-item routerLink='feed'>Feed</button>
-            <button mat-menu-item (click)='Logout()' style="color: white;
+<mat-toolbar class="container-fluid">
+    <a class="navbar-brand" routerLink=''>
+        <h3>FaceYourBookSpace</h3>
+    </a>
+    <form *ngIf='loggedin'>
+        <mat-form-field>
+            <mat-icon matPrefix color="warn" class='pb-0'>search</mat-icon>
+            <input matInput>
+        </mat-form-field>
+
+        <button mat-flat-button matSuffix color="warn">Search</button>
+    </form>
+
+
+    <span style=" flex: 1 1 auto;"></span>
+    <button mat-button type="button" *ngIf='loggedin' [matMenuTriggerFor]="menu">
+        <mat-icon>reorder</mat-icon>
+    </button>
+    <mat-menu #menu>
+        <button mat-menu-item routerLink='account'>Account</button>
+        <button mat-menu-item routerLink='feed'>Feed</button>
+        <button mat-menu-item (click)='Logout()' style="color: white;
             background-color: #f44336;">Logout</button>
-        </mat-menu>
-    </mat-toolbar>
-</div>
+    </mat-menu>
+</mat-toolbar>

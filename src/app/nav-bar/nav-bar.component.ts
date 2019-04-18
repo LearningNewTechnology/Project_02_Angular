@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
 
-  public loggedin: boolean;
+  public loggedin: boolean = false;
+  public isAccountPage: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { /*this.Logout();*/ }
 
@@ -18,7 +19,9 @@ export class NavBarComponent implements OnInit {
       .subscribe(
         (data) => {
           this.loggedin = this.authService.isLoggedIn();
-        });
+          if (this.router.url === '/account') { this.isAccountPage = true; }
+        },
+        (err) => { console.log(err); });
   }
 
   public Logout(): void {

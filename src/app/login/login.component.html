@@ -1,4 +1,4 @@
-<div class='col-4 pt-2 container'>
+<div class='col-4 pt-5 container'>
   <mat-card>
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
@@ -17,11 +17,15 @@
             minlength="8" maxlength="12">
         </mat-form-field>
       </form>
-      No account? <a routerLink='register'>Register</a><br />
-      Forgot Password?? <a routerLink='reset'>Reset</a>
+      <div *ngIf="loginSubmitted" style="color: red;">
+        <div *ngIf='loginGroup.controls.username.errors'> Invalid username</div>
+        <div *ngIf='loginGroup.controls.password.errors'> Invalid password</div>
+      </div>
+      <a routerLink='register'>Register new Account</a><br />
+      <a routerLink='reset'>Reset Password</a>
     </div>
     <mat-card-actions align="end">
-      <button mat-raised-button color="warn" [disabled]="!loginGroup.valid" (click)="Login()">Login</button>
+      <button mat-raised-button color="warn" [disabled]='loginGroup.invalid' (click)="Login()">Login</button>
     </mat-card-actions>
   </mat-card>
 </div>

@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { stringify } from '@angular/compiler/src/util';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +11,7 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class LoginComponent implements OnInit {
 
+  public loginSubmitted: boolean = false;
   public loginGroup: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
@@ -26,6 +26,10 @@ export class LoginComponent implements OnInit {
   }
 
   public Login() {
+    this.loginSubmitted = true;
+    if (this.loginGroup.invalid) {
+      return;
+    }
     this.user.username = this.loginGroup.value['username'];
     this.user.password = this.loginGroup.value['password'];
     this.user.id = 100;
