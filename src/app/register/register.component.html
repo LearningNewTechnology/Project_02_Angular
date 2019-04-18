@@ -1,3 +1,49 @@
-<p>
-  register works!
-</p>
+<div class='col-4 pt-2 container'>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
+    <div class='pl-4 pr-5 align-items-center'>
+      <form [formGroup]="registerGroup">
+        <mat-form-field style="width:100%;">
+          
+          <input #FirstName matInput type="text" placeholder="Enter first name" formControlName="firstName" required
+            minlength="1" />
+        </mat-form-field>
+
+        <mat-form-field style="width:100%;">
+        <input #LastName type="text" placeholder="Enter last name" formControlName="lastName" required minlength="1" />
+      </mat-form-field>
+        
+      <mat-form-field style="width:100%;">
+        <input #Email type="email" placeholder="email@gmail.com" formControlName="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required />
+        <!--Check that it has "@"-->
+      </mat-form-field>
+        
+      
+        <input #Username type="text" placeholder="Enter Username" formControlName="username" required minlength="8"
+          maxlength="12" />
+
+        
+        <input #Password type="password" placeholder="Enter password" formControlName="password" required minlength="8"
+          maxlength="12" />
+
+        
+        <input type="password" placeholder="Confirm password" formControlName="confirmPassword" required />
+
+      </form>
+    </div>
+
+    <div *ngIf="requestSubmitted" style="color: red;">
+      <div *ngIf="registerGroup.controls.email.errors">Invalid Email</div>
+      <div *ngIf="registerGroup.controls.username.errors">Username should be at least 8 or more characters</div>
+      <div *ngIf="registerGroup.controls.password.errors">Password should be at least 8 or more characters</div>
+      <div *ngIf="false">Password not match</div>
+      <!--change, modify later-->
+    </div>
+    <mat-card-actions align="center">
+      <button (click)="Register()">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
