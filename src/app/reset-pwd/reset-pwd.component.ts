@@ -30,4 +30,8 @@ export class ResetPwdComponent implements OnInit {
     this.router.navigateByUrl('login');
   }
 
+  public Cancel(){
+    this.router.navigateByUrl('login');
+  }
+
 }

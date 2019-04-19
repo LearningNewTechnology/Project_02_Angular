@@ -1,7 +1,7 @@
 <div class='col-4 pt-2 container'>
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Register</mat-card-title>
+      <mat-card-title>Reset Password</mat-card-title>
     </mat-card-header>
     <div class='pl-4 pr-5 align-items-center'>
       <form [formGroup]="resetPwdGroup">
@@ -25,6 +25,7 @@
 
     <mat-card-actions align="center">
       <button mat-raised-button (click)="ResetPwd()">Submit</button>
+      <button mat-raised-button (click)="Cancel()">Cancel</button>
     </mat-card-actions>
   </mat-card>
 </div>
