@@ -1,3 +1,30 @@
-<p>
-  reset-pwd works!
-</p>
+<div class='col-4 pt-2 container'>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
+    <div class='pl-4 pr-5 align-items-center'>
+      <form [formGroup]="resetPwdGroup">
+        <mat-form-field style="width:100%;">
+          
+          <input #NewPwd matInput type="password" placeholder="Enter new password" formControlName="newPwd" 
+            minlength="8" maxlength="12" required/>
+        </mat-form-field>
+
+        <mat-form-field style="width:100%;">
+        <input #ConfirmPwd matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required/>
+      </mat-form-field>
+      </form>
+    </div>
+
+    <div *ngIf="requestSubmitted" style="color: red;">
+      <div *ngIf="resetPwdGroup.controls.newPwd.errors">Password should be at least 8 or more characters</div>
+      <div *ngIf="false">Password not match</div>
+      <!--change, modify later-->
+    </div>
+
+    <mat-card-actions align="center">
+      <button mat-raised-button (click)="ResetPwd()">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

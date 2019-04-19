@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,9 +18,12 @@ export class RegisterComponent implements OnInit {
     confirmPassword: new FormControl('')
   });
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    
+    //this.router.navigateByUrl('login');
+    
   }
 
   Register() {
@@ -31,6 +35,8 @@ export class RegisterComponent implements OnInit {
     let newUSer: String = JSON.stringify(this.registerGroup.value);
     
     console.log(newUSer);
+    this.router.navigateByUrl('login');
+    
   }
 
 }
