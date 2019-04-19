@@ -10,6 +10,8 @@ import { User } from '../user';
 })
 export class AccountComponent implements OnInit {
 
+public profilePicUrl: string = 'assets/img/RainbowPls.gif';
+
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {

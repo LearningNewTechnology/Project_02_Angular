@@ -1,19 +1,20 @@
 <div class='col-4 pt-2 container'>
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Reset Password</mat-card-title>
+      <mat-card-title>Reset Password - WIP</mat-card-title>
     </mat-card-header>
     <div class='pl-4 pr-5 align-items-center'>
       <form [formGroup]="resetPwdGroup">
         <mat-form-field style="width:100%;">
-          
-          <input #NewPwd matInput type="password" placeholder="Enter new password" formControlName="newPwd" 
-            minlength="8" maxlength="12" required/>
+
+          <input #NewPwd matInput type="password" placeholder="Enter new password" formControlName="newPwd"
+            minlength="8" maxlength="12" required />
         </mat-form-field>
 
         <mat-form-field style="width:100%;">
-        <input #ConfirmPwd matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required/>
-      </mat-form-field>
+          <input #ConfirmPwd matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword"
+            required />
+        </mat-form-field>
       </form>
     </div>
 
@@ -23,8 +24,8 @@
       <!--change, modify later-->
     </div>
 
-    <mat-card-actions align="center">
-      <button mat-raised-button (click)="ResetPwd()">Submit</button>
+    <mat-card-actions align="end">
+      <button mat-raised-button color='warn' (click)="ResetPwd()">Submit</button>
       <button mat-raised-button (click)="Cancel()">Cancel</button>
     </mat-card-actions>
   </mat-card>

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   public requestSubmitted: boolean = false;
+  public pwdMatch: boolean = true;
   public registerGroup: FormGroup = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
@@ -21,26 +22,36 @@ export class RegisterComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    
+
     //this.router.navigateByUrl('login');
-    
+
   }
 
   Register() {
-    this.requestSubmitted = true;
+    this.requestSubmitted = this.pwdMatch = true;
     console.log(this.registerGroup.valid);
-    if(this.registerGroup.invalid){
+    if (this.registerGroup.invalid) {
       return;
     }
+
+    this.pwdMatch = this.checkPasswords(this.registerGroup);
+    if (!this.pwdMatch) { return; }
+
     let newUSer: String = JSON.stringify(this.registerGroup.value);
-    
+
     console.log(newUSer);
-    this.router.navigateByUrl('login');
-    
+    this.Cancel();
   }
 
-  public Cancel(){
+  public Cancel() {
     this.router.navigateByUrl('login');
+  }
+
+  checkPasswords(group: FormGroup) {
+    let pass = group.controls.password.value;
+    let confirm = group.controls.confirmPassword.value;
+
+    return pass === confirm;
   }
 
 }

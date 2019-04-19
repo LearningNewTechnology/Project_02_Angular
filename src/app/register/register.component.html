@@ -6,47 +6,50 @@
     <div class='pl-4 pr-5 align-items-center'>
       <form [formGroup]="registerGroup">
         <mat-form-field style="width:100%;">
-          
-          <input #FirstName matInput type="text" placeholder="Enter first name" formControlName="firstName" 
-            minlength="1" required/>
+
+          <input #FirstName matInput type="text" placeholder="First Name" formControlName="firstName" minlength="1"
+            required />
         </mat-form-field>
 
         <mat-form-field style="width:100%;">
-        <input #LastName matInput type="text" placeholder="Enter last name" formControlName="lastName"  minlength="1" required/>
-      </mat-form-field>
-        
-      <mat-form-field style="width:100%;">
-        <input #Email matInput type="email" placeholder="email@gmail.com" formControlName="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required />
-        <!--Check that it has "@"-->
-      </mat-form-field>
-        
-      <mat-form-field style="width:100%;">
-        <input #Username matInput type="text" placeholder="Enter Username" formControlName="username" minlength="8"
-          maxlength="12" required/>
-      </mat-form-field>
-
-          <mat-form-field style="width:100%;">
-        <input #Password matInput type="password" placeholder="Enter password" formControlName="password" minlength="8"
-          maxlength="12" required/>
+          <input #LastName matInput type="text" placeholder="Last Name" formControlName="lastName" minlength="1"
+            required />
         </mat-form-field>
 
-          <mat-form-field style="width:100%;">
-        <input type="password" matInput placeholder="Confirm password" formControlName="confirmPassword" required />
-            </mat-form-field>
+        <mat-form-field style="width:100%;">
+          <input #Email matInput type="email" placeholder="email@gmail.com" formControlName="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required />
+          <!--Check that it has "@"-->
+        </mat-form-field>
+
+        <mat-form-field style="width:100%;">
+          <input #Username matInput type="text" placeholder="Username" formControlName="username" minlength="8"
+            maxlength="12" required />
+        </mat-form-field>
+
+        <mat-form-field style="width:100%;">
+          <input #Password matInput type="password" placeholder="Password" formControlName="password" minlength="8"
+            maxlength="12" required />
+        </mat-form-field>
+
+        <mat-form-field style="width:100%;">
+          <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required />
+        </mat-form-field>
       </form>
     </div>
 
-    <div *ngIf="requestSubmitted" style="color: red;">
-      <div *ngIf="registerGroup.controls.email.errors">Invalid Email</div>
-      <div *ngIf="registerGroup.controls.username.errors">Username should be at least 8 or more characters</div>
-      <div *ngIf="registerGroup.controls.password.errors">Password should be at least 8 or more characters</div>
-      <div *ngIf="false">Password not match</div>
+    <div *ngIf="requestSubmitted">
+      <mat-error *ngIf="registerGroup.controls.email.errors">Invalid Email</mat-error>
+      <mat-error *ngIf="registerGroup.controls.username.errors">Username should be at least 8 or more characters
+      </mat-error>
+      <mat-error *ngIf="registerGroup.controls.password.errors">Password should be at least 8 or more characters
+      </mat-error>
+      <mat-error *ngIf="!pwdMatch">Password fields do not match</mat-error>
       <!--change, modify later-->
     </div>
-    <mat-card-actions align="center">
-      <button mat-raised-button id="btn1" (click)="Register()">Submit</button>
-      <button mat-raised-button id="btn1" (click)="Cancel()">Cancel</button>
+    <mat-card-actions align="end">
+      <button mat-raised-button [disabled]='this.registerGroup.invalid' (click)="Register()">Submit</button>
+      <button mat-raised-button color="warn" (click)="Cancel()">Cancel</button>
     </mat-card-actions>
   </mat-card>
 </div>
