@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ɵangular_packages_forms_forms_w } from '@angular/forms';
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   });
 
-  constructor(private authService: AuthService, private user: User, private router: Router) { }
+  constructor(private authService: AuthService, private user: User, private router: Router, private db: DatabaseService) { }
 
   ngOnInit() {
     if (this.authService.isLoggedIn) {
@@ -30,15 +31,23 @@ export class LoginComponent implements OnInit {
     if (this.loginGroup.invalid) {
       return;
     }
-    this.user.username = this.loginGroup.value['username'];
-    this.user.password = this.loginGroup.value['password'];
-    this.user.id = 100;
-    this.user.accessKey = "User";
+    let formUsr = this.loginGroup.value['username'];
+    let formPwd = this.loginGroup.value['password'];
 
-    console.log('Login user: ', this.user);
+    let userData: any;
 
+
+    this.db.getUserByUsername(formUsr).subscribe(
+      (data) => {
+        userData = data;
+      },
+      (err) => console.error('Error occured: ', err),
+      () => console.log('DB Response: ',userData)
+    );
+
+    console.log('Login user: ', { 'username': formUsr, 'password': formPwd });
     this.authService.login(this.user);
-    this.router.navigateByUrl('account');
+    //this.router.navigateByUrl('account');
   }
 
 }

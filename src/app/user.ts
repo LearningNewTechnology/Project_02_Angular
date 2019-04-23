@@ -11,5 +11,7 @@ export class User {
     password: string;
     email: string;
     accessKey: string;
-    posts: Post[];
+    firsName: string;
+    lastName: string;
+    // posts: Post[];
 }
