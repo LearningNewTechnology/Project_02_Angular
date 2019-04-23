@@ -14,6 +14,8 @@ import { EditInfoComponent } from './edit-info/edit-info.component';
 import { ResetPwdComponent } from './reset-pwd/reset-pwd.component';
 import { PostFeedComponent } from './post-feed/post-feed.component';
 import { PostComponent } from './post/post.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DatabaseService } from './database.service';
 
 @NgModule({
   declarations: [
@@ -32,9 +34,10 @@ import { PostComponent } from './post/post.component';
     AppRoutingModule,
     AngMaterialsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
