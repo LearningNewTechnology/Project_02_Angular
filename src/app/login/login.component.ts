@@ -3,6 +3,7 @@ import { User } from '../user';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +17,8 @@ export class LoginComponent implements OnInit {
     username: new FormControl(''),
     password: new FormControl('')
   });
-
-  constructor(private authService: AuthService, private user: User, private router: Router) { }
+                                                                                            //_dataService added by Poho
+  constructor(private authService: AuthService, private user: User, private router: Router, private _dataService: DatabaseService) { }
 
   ngOnInit() {
     if (this.authService.isLoggedIn) {
@@ -26,6 +27,14 @@ export class LoginComponent implements OnInit {
   }
 
   public Login() {
+    // Added by Poho
+    let newUSer: String = JSON.stringify(this.loginGroup.value);
+    this._dataService.loginValidation(newUSer)
+    .subscribe((response) => {console.log(response)}, (error)=>{
+      console.log(error);
+    });
+    // up to here
+
     this.loginSubmitted = true;
     if (this.loginGroup.invalid) {
       return;

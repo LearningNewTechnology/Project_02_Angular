@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../user'; //modified by Poho
+import { DatabaseService } from '../database.service'; //modified by Poho
 
 @Component({
   selector: 'app-register',
@@ -19,7 +21,7 @@ export class RegisterComponent implements OnInit {
     confirmPassword: new FormControl('')
   });
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _dataService: DatabaseService) { }
 
   ngOnInit() {
 
@@ -27,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  Register() {
+  Register() { 
     this.requestSubmitted = this.pwdMatch = true;
     console.log(this.registerGroup.valid);
     if (this.registerGroup.invalid) {
@@ -38,7 +40,13 @@ export class RegisterComponent implements OnInit {
     if (!this.pwdMatch) { return; }
 
     let newUSer: String = JSON.stringify(this.registerGroup.value);
-
+    //modified by Poho
+    //let user: User = JSON.parse(this.registerGroup.value);
+    this._dataService.registerNewUser(newUSer)
+    .subscribe((response) => {console.log(response)}, (error)=>{
+      console.log(error);
+    });
+    //up to here that Poho changed
     console.log(newUSer);
     this.Cancel();
   }

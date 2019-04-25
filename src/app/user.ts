@@ -9,4 +9,9 @@ export class User {
     username: string;
     password: string;
     accessKey: string;
+
+    //modified by Poho
+    firstName: string;
+    lastName: string;
+    email: string;
 }
