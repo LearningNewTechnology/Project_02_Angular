@@ -27,14 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   public Login() {
-    // Added by Poho
-    let newUSer: String = JSON.stringify(this.loginGroup.value);
-    this.db.loginValidation(newUSer)
-    .subscribe((response) => {console.log(response)}, (error)=>{
-      console.log(error);
-    });
-    // up to here
-
     this.loginSubmitted = true;
     if (this.loginGroup.invalid) {
       return;
@@ -42,20 +34,19 @@ export class LoginComponent implements OnInit {
     let formUsr = this.loginGroup.value['username'];
     let formPwd = this.loginGroup.value['password'];
 
-    let userData: any;
+    let userData: User = new User();
 
 
     this.db.getUserByUsername(formUsr).subscribe(
       (data) => {
-        userData = data;
+        userData.setAll(data['username'], data['password'], data['email'], data['firstName'], data['lastName'], data['id'], data['access_key'])
       },
       (err) => console.error('Error occured: ', err),
-      () => console.log('DB Response: ',userData)
+      () => {
+        this.authService.login(userData);
+        this.router.navigateByUrl('account');
+      }
     );
-
-    console.log('Login user: ', { 'username': formUsr, 'password': formPwd });
-    this.authService.login(this.user);
-    //this.router.navigateByUrl('account');
   }
 
 }

@@ -3,7 +3,6 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'; //Ht
 import { Observable } from 'rxjs';
 import { User } from './user';
 import { Post } from './post';
-import { Options } from 'selenium-webdriver/firefox';
 
 @Injectable({
   providedIn: 'root'
@@ -29,28 +28,32 @@ export class DatabaseService {
   }
 
   //orignal: u: String is (u: User)
-  registerNewUser(u: String): Observable<Object> {
-    //let headers = new Headers({'Content-Type': 'application/json'});
+  registerNewUser(u: User): Observable<Object> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post(this.APP_URL + '/friends/register', u, httpOptions); //origial '/friends/register' is '/users/' 
+    return this.http.post(this.APP_URL + '/friends/register', JSON.stringify(u), httpOptions);
   }
 
   //new login method create by Poho
-  loginValidation (u: String): Observable<Object>{
+  loginValidation(u: User): Observable<Object> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post(this.APP_URL + '/friends/login', u, httpOptions);
+    return this.http.post(this.APP_URL + '/friends/login', JSON.stringify(u), httpOptions);
   }
 
   updateUser(u: User): Observable<Object> {
-    return this.http.put(this.APP_URL + '/friends/' + u.id, u);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.put(this.APP_URL + '/friends/' + u.id, u, httpOptions);
   }
 
   deleteUser(id: number): Observable<Object> {
@@ -68,11 +71,21 @@ export class DatabaseService {
   }
 
   createNewPost(userId: number, p: Post): Observable<Object> {
-    return this.http.post(this.APP_URL + '/friends/' + userId + '/posts/', p);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(this.APP_URL + '/friends/' + userId + '/posts/', p, httpOptions);
   }
 
   updatePostr(userId: number, p: Post): Observable<Object> {
-    return this.http.put(this.APP_URL + '/friends/' + userId + '/posts/' + p.id, p);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.put(this.APP_URL + '/friends/' + userId + '/posts/' + p.id, p, httpOptions);
   }
 
   deletePost(userId: number, postId: number): Observable<Object> {

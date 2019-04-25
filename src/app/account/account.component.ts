@@ -12,6 +12,8 @@ import { DatabaseService } from '../database.service';
 export class AccountComponent implements OnInit {
 
   public profilePicUrl: string = 'assets/img/RainbowPls.gif';
+  public user: User;
+  public edit: boolean = false;
 
   constructor(private authService: AuthService, private router: Router, private db: DatabaseService) { }
 
@@ -19,8 +21,11 @@ export class AccountComponent implements OnInit {
     if (!this.authService.isLoggedIn) {
       this.router.navigateByUrl('login');
     }
-    let user: User = JSON.parse(localStorage.getItem('USER'));
-    // console.log('Account user: ', user);
+    this.user = JSON.parse(localStorage.getItem('USER'));
+  }
+
+  public toggleEdit(): void {
+    this.edit = !this.edit;
   }
 
 }

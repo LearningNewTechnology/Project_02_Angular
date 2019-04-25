@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostFeedComponent implements OnInit {
 
+  /**Feed of LOGGED IN USER posts only */
+
   constructor() { }
 
   ngOnInit() {
