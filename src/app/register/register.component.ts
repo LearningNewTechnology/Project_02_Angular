@@ -24,9 +24,7 @@ export class RegisterComponent implements OnInit {
   constructor(private router: Router, private _dataService: DatabaseService) { }
 
   ngOnInit() {
-
-    //this.router.navigateByUrl('login');
-
+    
   }
 
   Register() {
@@ -39,7 +37,8 @@ export class RegisterComponent implements OnInit {
     this.pwdMatch = this.checkPasswords(this.registerGroup);
     if (!this.pwdMatch) { return; }
 
-    let newUSer: User = new User(
+    let registerUser: User = new User();
+    registerUser.setAll(
       this.registerGroup.value['username'],
       this.registerGroup.value['password'],
       this.registerGroup.value['email'],
@@ -47,13 +46,13 @@ export class RegisterComponent implements OnInit {
       this.registerGroup.value['lastName']
     );
 
-    this._dataService.registerNewUser(newUSer)
+    this._dataService.registerNewUser(registerUser)
       .subscribe(
         response => console.log(response),
         error => console.error(error)
       );
 
-    console.log(JSON.stringify(newUSer));
+    console.log(JSON.stringify(registerUser));
     //this.Cancel();
   }
 
