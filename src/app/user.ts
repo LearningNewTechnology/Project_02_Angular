@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Post } from './post';
 
 @Injectable({
     providedIn: 'root'
@@ -8,10 +9,9 @@ export class User {
     id: number;
     username: string;
     password: string;
-    accessKey: string;
-
-    //modified by Poho
-    firstName: string;
-    lastName: string;
     email: string;
+    accessKey: string;
+    firsName: string;
+    lastName: string;
+    // posts: Post[];
 }

@@ -21,11 +21,6 @@ export class AccountComponent implements OnInit {
     }
     let user: User = JSON.parse(localStorage.getItem('USER'));
     // console.log('Account user: ', user);
-    this.db.getAllUsers()
-      .subscribe(
-        (data) => console.log(data),
-        (err) => console.error('Error Occured: ', err)
-      );
   }
 
 }

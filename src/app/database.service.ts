@@ -21,7 +21,11 @@ export class DatabaseService {
   }
 
   getUserById(id: number): Observable<Object> {
-    return this.http.get(this.APP_URL + '/users/' + id);
+    return this.http.get(this.APP_URL + '/friends/' + id);
+  }
+
+  getUserByUsername(username: string): Observable<Object> {
+    return this.http.get(this.APP_URL + '/friends/=' + username);
   }
 
   //orignal: u: String is (u: User)
@@ -46,11 +50,11 @@ export class DatabaseService {
   }
 
   updateUser(u: User): Observable<Object> {
-    return this.http.put(this.APP_URL + '/users/' + u.id, u);
+    return this.http.put(this.APP_URL + '/friends/' + u.id, u);
   }
 
   deleteUser(id: number): Observable<Object> {
-    return this.http.delete(this.APP_URL + '/users/' + id);
+    return this.http.delete(this.APP_URL + '/friends/' + id);
   }
   //#endregion
 
@@ -60,19 +64,19 @@ export class DatabaseService {
   }
 
   getAllPostsByUser(userId: number): Observable<Object> {
-    return this.http.get(this.APP_URL + '/users/' + userId + '/posts/');
+    return this.http.get(this.APP_URL + '/friends/' + userId + '/posts/');
   }
 
   createNewPost(userId: number, p: Post): Observable<Object> {
-    return this.http.post(this.APP_URL + '/users/' + userId + '/posts/', p);
+    return this.http.post(this.APP_URL + '/friends/' + userId + '/posts/', p);
   }
 
   updatePostr(userId: number, p: Post): Observable<Object> {
-    return this.http.put(this.APP_URL + '/users/' + userId + '/posts/' + p.id, p);
+    return this.http.put(this.APP_URL + '/friends/' + userId + '/posts/' + p.id, p);
   }
 
   deletePost(userId: number, postId: number): Observable<Object> {
-    return this.http.delete(this.APP_URL + '/users/' + userId + '/posts/' + postId);
+    return this.http.delete(this.APP_URL + '/friends/' + userId + '/posts/' + postId);
   }
   //#endregion
 }

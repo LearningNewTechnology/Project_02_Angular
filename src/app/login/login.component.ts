@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
     username: new FormControl(''),
     password: new FormControl('')
   });
-                                                                                            //_dataService added by Poho
-  constructor(private authService: AuthService, private user: User, private router: Router, private _dataService: DatabaseService) { }
+
+  constructor(private authService: AuthService, private user: User, private router: Router, private db: DatabaseService) { }
 
   ngOnInit() {
     if (this.authService.isLoggedIn) {
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   public Login() {
     // Added by Poho
     let newUSer: String = JSON.stringify(this.loginGroup.value);
-    this._dataService.loginValidation(newUSer)
+    this.db.loginValidation(newUSer)
     .subscribe((response) => {console.log(response)}, (error)=>{
       console.log(error);
     });
@@ -39,15 +39,23 @@ export class LoginComponent implements OnInit {
     if (this.loginGroup.invalid) {
       return;
     }
-    this.user.username = this.loginGroup.value['username'];
-    this.user.password = this.loginGroup.value['password'];
-    this.user.id = 100;
-    this.user.accessKey = "User";
+    let formUsr = this.loginGroup.value['username'];
+    let formPwd = this.loginGroup.value['password'];
 
-    console.log('Login user: ', this.user);
+    let userData: any;
 
+
+    this.db.getUserByUsername(formUsr).subscribe(
+      (data) => {
+        userData = data;
+      },
+      (err) => console.error('Error occured: ', err),
+      () => console.log('DB Response: ',userData)
+    );
+
+    console.log('Login user: ', { 'username': formUsr, 'password': formPwd });
     this.authService.login(this.user);
-    this.router.navigateByUrl('account');
+    //this.router.navigateByUrl('account');
   }
 
 }
