@@ -13,6 +13,8 @@ import { DatabaseService } from '../database.service';
 export class LoginComponent implements OnInit {
 
   public loginSubmitted: boolean = false;
+  public usernamesMatch: boolean = true;
+  public passwordsMatch: boolean = true;
   public loginGroup: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
@@ -43,6 +45,12 @@ export class LoginComponent implements OnInit {
       },
       (err) => console.error('Error occured: ', err),
       () => {
+        if (formUsr != userData['username']) {
+          this.usernamesMatch = false;
+        }
+        else {
+
+        }
         this.authService.login(userData);
         this.router.navigateByUrl('account');
       }
