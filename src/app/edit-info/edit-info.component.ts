@@ -23,29 +23,39 @@ export class EditInfoComponent implements OnInit {
   
   }
 
-  constructor(private router: Router, private _db: DatabaseService, fb: FormBuilder) { 
+  constructor(private router: Router, private _db: DatabaseService, fb: FormBuilder, private _currUser: User) { 
+   //call the getUserById
+   this._currUser = JSON.parse(localStorage.getItem('USER'));
+   
     //this is from a tutorial, they put this in the constructor, don't know why
     this.editGroup = fb.group({
-      first_name: [], //call first_name getter
-      last_name: [], // call last_name getter
-      email: [],  // call email getter
-      username: [] // call username getter
+      first_name: [_currUser.first_name], //call first_name getter
+      last_name: [_currUser.last_name], // call last_name getter
+      email: [_currUser.email],  // call email getter
+      username: [_currUser.username] // call username getter
     });
+
   }
 
   ngOnInit() {
   }
 
-  Update(){
+  Update() {
     console.log(this.editGroup.valid);
     if (this.editGroup.invalid) {
       return;
     }
 
-    // call setter for first_name
-    // call setter for last_name
-    // call setter for email
-    // call setter for username
+    this._currUser.first_name = this.editGroup.value.first_name; // call setter for first_name
+    this._currUser.last_name = this.editGroup.value.last_name;// call setter for last_name
+    this._currUser.email = this.editGroup.value.email;// call setter for email
+    this._currUser.username = this.editGroup.value.username;// call setter for username
+
+    this._db.updateUser(this._currUser).subscribe(
+      data=>console.log(data),
+      err=>console.error('Error occured: ', err),
+      ()=>console.log('Profile ubdated successfully.')
+      );
   }
 
   Cancel(){
