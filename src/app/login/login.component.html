@@ -18,8 +18,10 @@
         </mat-form-field>
       </form>
       <div *ngIf="loginSubmitted" style="color: red;">
-        <mat-error *ngIf='loginGroup.controls.username.errors'> Invalid username</mat-error>
-        <mat-error *ngIf='loginGroup.controls.password.errors'> Invalid password</mat-error>
+        <mat-error *ngIf='loginGroup.controls.username.errors'>*Invalid username</mat-error>
+        <mat-error *ngIf='userNotFound'>*Username not found</mat-error>
+        <mat-error *ngIf='loginGroup.controls.password.errors'>*Invalid password</mat-error>
+        <mat-error *ngIf='passwordNotFound'>*Password does not match records</mat-error>
       </div>
       <a routerLink='register'>Register new Account</a><br />
       <a routerLink='reset'>Reset Password</a>

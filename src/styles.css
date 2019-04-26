@@ -5,8 +5,8 @@ body{
     background-color: lightslategray;
 }
 a{
-    color: #f44336;
+    color: white;
 }
 a:hover{
-    color: #f46c36;
+    color: lightgray;
 }
