@@ -57,9 +57,4 @@ export class EditInfoComponent implements OnInit {
       ()=>console.log('Profile ubdated successfully.')
       );
   }
-
-  Cancel(){
-    this.router.navigateByUrl('account');
-  }
-
 }

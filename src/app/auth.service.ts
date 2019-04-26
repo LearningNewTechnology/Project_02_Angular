@@ -9,7 +9,7 @@ export class AuthService {
   constructor() { }
 
   public login(userInfo: User) {
-    // console.log(userInfo);
+    console.log('Auth Service User: ',userInfo);
     localStorage.setItem('USER', JSON.stringify(userInfo));
   }
 

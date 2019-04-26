@@ -21,7 +21,6 @@ export class DatabaseService {
   constructor(private http: HttpClient) { }
 
   checkLogin(u: User): Observable<Object> {
-    console.log(u);
     return this.http.post(this.APP_URL + '/friends/login', JSON.stringify(u), this.options);
   }
 
@@ -59,7 +58,7 @@ export class DatabaseService {
 
   //#region Post methods
   getAllPosts(): Observable<Object> {
-    return this.http.get(this.APP_URL + '/feed/');
+    return this.http.get(this.APP_URL + '/posts');
   }
 
   getAllPostsByUser(userId: number): Observable<Object> {
@@ -71,7 +70,7 @@ export class DatabaseService {
   }
 
   updatePost(userId: number, p: Post): Observable<Object> {
-    return this.http.put(this.APP_URL + '/friends/' + userId + '/posts/' + p.id, JSON.stringify(p), this.options);
+    return this.http.put(this.APP_URL + '/friends/' + userId + '/posts/' + p.Id, JSON.stringify(p), this.options);
   }
 
   deletePost(userId: number, postId: number): Observable<Object> {

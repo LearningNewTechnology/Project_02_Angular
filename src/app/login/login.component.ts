@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
     }
 
     let userData: User = new User();
-    console.log(this.loginGroup.value);
 
     this.db.getUserByUsername(this.loginGroup.value['username']).subscribe(
       (data) => {
@@ -54,8 +53,9 @@ export class LoginComponent implements OnInit {
             err => console.error('Login err: ', err),
             () => {
               if (msg.status === 0) {
+                console.log('Login Component User: ',userData);
                 this.authService.login(userData);
-                //this.router.navigateByUrl('account');
+                this.router.navigateByUrl('account');
               }
               else { this.passwordNotFound = true; }
             }

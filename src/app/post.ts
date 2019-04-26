@@ -6,19 +6,19 @@ import { Injectable } from '@angular/core';
 
 export class Post {
 
-    private _user_id: number;
-    private _content: string;
-    private _id: number;
+    private user_id: number;
+    private content: string;
+    private id: number;
 
-    public get user_id(): number { return this._user_id; }
-    public get content(): string { return this._content; }
-    public get id(): number { return this._id; }
+    public get User_id(): number { return this.user_id; }
+    public get Content(): string { return this.content; }
+    public get Id(): number { return this.id; }
 
-    public set content(content: string) { this._content = content; }
+    public set Content(content: string) { this.content = content; }
 
     public setAll(user_id: number, content: string, id?: number): void {
-        this._user_id = user_id;
-        this._content = content;
-        this._id = id || 0;
+        this.user_id = user_id;
+        this.content = content;
+        this.id = id || 0;
     }
 }

@@ -22,6 +22,7 @@ export class AccountComponent implements OnInit {
       this.router.navigateByUrl('login');
     }
     this.user = JSON.parse(localStorage.getItem('USER'));
+    console.log("Account Component USer: ", this.user);
   }
 
   public toggleEdit(): void {
