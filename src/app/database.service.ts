@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'; //HttpRequest was not here before
+import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http'; //HttpResponse was not here before
 import { Observable } from 'rxjs';
 import { User } from './user';
 import { Post } from './post';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable({
   providedIn: 'root'
