@@ -19,10 +19,6 @@ export class EditInfoComponent implements OnInit {
     username: new FormControl('')
   });
 
-  public data: Object = {
-  
-  }
-
   constructor(private router: Router, private _db: DatabaseService, fb: FormBuilder, private _currUser: User) { 
    //call the getUserById
    this._currUser = JSON.parse(localStorage.getItem('USER'));
@@ -54,7 +50,7 @@ export class EditInfoComponent implements OnInit {
     this._db.updateUser(this._currUser).subscribe(
       data=>console.log(data),
       err=>console.error('Error occured: ', err),
-      ()=>console.log('Profile ubdated successfully.')
+      ()=>console.log('Profile updated successfully.')
       );
   }
 
