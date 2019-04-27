@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } 
 import { Router } from '@angular/router';
 import { DatabaseService } from '../database.service';
 import { User } from '../user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit-info',
@@ -19,21 +20,27 @@ export class EditInfoComponent implements OnInit {
     username: new FormControl('')
   });
 
-  constructor(private router: Router, private _db: DatabaseService, fb: FormBuilder, private _currUser: User) { 
-   //call the getUserById
-   this._currUser = JSON.parse(localStorage.getItem('USER'));
+  
+
+  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User) { 
    
-    //this is from a tutorial, they put this in the constructor, don't know why
-    this.editGroup = fb.group({
-      first_name: [_currUser.First_name], //call first_name getter
-      last_name: [_currUser.Last_name], // call last_name getter
-      email: [_currUser.Email],  // call email getter
-      username: [_currUser.Username] // call username getter
-    });
+   
+
 
   }
 
   ngOnInit() {
+     //call the getUserById
+   this._currUser = JSON.parse(localStorage.getItem('USER'));
+        //this is from a tutorial, they put this in the constructor, don't know why
+        this.editGroup = this.fb.group({
+          first_name: [this._currUser.First_name], //call first_name getter
+          last_name: [this._currUser.Last_name], // call last_name getter
+          email: [this._currUser.Email],  // call email getter
+          username: [this._currUser.Username] // call username getter
+        });
+
+      
   }
 
   Update() {

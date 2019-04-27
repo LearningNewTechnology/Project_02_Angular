@@ -12,6 +12,12 @@ import { DatabaseService } from '../database.service'; //modified by Poho
 export class RegisterComponent implements OnInit {
   public requestSubmitted: boolean = false;
   public pwdMatch: boolean = true;
+
+  //new things added
+  public usernameValid: boolean = true;
+  public emailValid: boolean = true;
+  //up to here
+
   public registerGroup: FormGroup = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
@@ -21,15 +27,15 @@ export class RegisterComponent implements OnInit {
     confirmPassword: new FormControl('')
   });
 
-  constructor(private router: Router, private _dataService: DatabaseService) { }
+  constructor(private router: Router, private db: DatabaseService) { }
 
   ngOnInit() {
-    
+
   }
 
   Register() {
     this.requestSubmitted = this.pwdMatch = true;
-    console.log(this.registerGroup.valid);
+    console.log('Reg Group Valid?: ',this.registerGroup.valid);
     if (this.registerGroup.invalid) {
       return;
     }
@@ -46,15 +52,29 @@ export class RegisterComponent implements OnInit {
       this.registerGroup.value['lastName']
     );
 
-    this._dataService.registerNewUser(registerUser)
+    let msg: any;
+    this.db.registerNewUser(registerUser)
       .subscribe(
-        response => console.log(response),
-        error => console.error(error)
+        data => msg = data, //original this is not commented out
+        error => console.error(error),
+        () => {
+          if (msg.status === 0) {
+            this.emailValid = true;
+            this.usernameValid = true;
+            console.log('message status: ', msg.status);
+            console.log('submit success');
+            this.Cancel();
+          } else if (msg.status === 2) {
+            //console.log('Register Component User: ',registerUser);
+            this.emailValid = false;
+            console.log('emailValid: ', this.emailValid);
+          } else if (msg.status === 7) {
+            this.usernameValid = false;
+            console.log('usernameValid: ', this.usernameValid);
+          }
+        }
       );
-
-    console.log(JSON.stringify(registerUser));
-    //this.Cancel();
-  }
+  } //end of Register method
 
   public Cancel() {
     this.router.navigateByUrl('login');
@@ -65,6 +85,14 @@ export class RegisterComponent implements OnInit {
     let confirm = group.controls.confirmPassword.value;
 
     return pass === confirm;
+  }
+
+  emailChange() {
+    this.emailValid = true;
+  }
+
+  usernameChange() {
+    this.usernameValid = true;
   }
 
 }
