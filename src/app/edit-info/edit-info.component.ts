@@ -25,10 +25,10 @@ export class EditInfoComponent implements OnInit {
    
     //this is from a tutorial, they put this in the constructor, don't know why
     this.editGroup = fb.group({
-      first_name: [_currUser.first_name], //call first_name getter
-      last_name: [_currUser.last_name], // call last_name getter
-      email: [_currUser.email],  // call email getter
-      username: [_currUser.username] // call username getter
+      first_name: [_currUser.First_name], //call first_name getter
+      last_name: [_currUser.Last_name], // call last_name getter
+      email: [_currUser.Email],  // call email getter
+      username: [_currUser.Username] // call username getter
     });
 
   }
@@ -42,10 +42,10 @@ export class EditInfoComponent implements OnInit {
       return;
     }
 
-    this._currUser.first_name = this.editGroup.value.first_name; // call setter for first_name
-    this._currUser.last_name = this.editGroup.value.last_name;// call setter for last_name
-    this._currUser.email = this.editGroup.value.email;// call setter for email
-    this._currUser.username = this.editGroup.value.username;// call setter for username
+    this._currUser.First_name = this.editGroup.value.first_name; // call setter for first_name
+    this._currUser.Last_name = this.editGroup.value.last_name;// call setter for last_name
+    this._currUser.Email = this.editGroup.value.email;// call setter for email
+    this._currUser.Username = this.editGroup.value.username;// call setter for username
 
     this._db.updateUser(this._currUser).subscribe(
       data=>console.log(data),
@@ -53,9 +53,4 @@ export class EditInfoComponent implements OnInit {
       ()=>console.log('Profile updated successfully.')
       );
   }
-
-  Cancel(){
-    this.router.navigateByUrl('account');
-  }
-
 }

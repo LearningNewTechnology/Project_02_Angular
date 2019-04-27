@@ -13,8 +13,8 @@ import { DatabaseService } from '../database.service';
 export class LoginComponent implements OnInit {
 
   public loginSubmitted: boolean = false;
-  public usernamesMatch: boolean = true;
-  public passwordsMatch: boolean = true;
+  public userNotFound: boolean = false;
+  public passwordNotFound: boolean = false;
   public loginGroup: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
@@ -33,26 +33,34 @@ export class LoginComponent implements OnInit {
     if (this.loginGroup.invalid) {
       return;
     }
-    let formUsr = this.loginGroup.value['username'];
-    let formPwd = this.loginGroup.value['password'];
 
     let userData: User = new User();
 
-
-    this.db.getUserByUsername(formUsr).subscribe(
+    this.db.getUserByUsername(this.loginGroup.value['username']).subscribe(
       (data) => {
-        userData.setAll(data['username'], data['password'], data['email'], data['firstName'], data['lastName'], data['id'], data['access_key'])
+        userData.setAll(data['username'], this.loginGroup.value['password'], data['email'], data['firstName'], data['lastName'], data['id'], data['access_key'])
       },
       (err) => console.error('Error occured: ', err),
       () => {
-        if (formUsr != userData['username']) {
-          this.usernamesMatch = false;
+        if (userData.Id === 0) { this.userNotFound = true; }
+        if (this.loginGroup.value['username'] != userData['username']) {
+          this.userNotFound = true;
         }
         else {
-
+          let msg: any;
+          this.db.checkLogin(userData).subscribe(
+            data => msg = data,
+            err => console.error('Login err: ', err),
+            () => {
+              if (msg.status === 0) {
+                console.log('Login Component User: ',userData);
+                this.authService.login(userData);
+                this.router.navigateByUrl('account');
+              }
+              else { this.passwordNotFound = true; }
+            }
+          );
         }
-        this.authService.login(userData);
-        this.router.navigateByUrl('account');
       }
     );
   }

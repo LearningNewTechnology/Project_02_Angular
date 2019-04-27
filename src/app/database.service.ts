@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http'; //HttpResponse was not here before
+import { HttpClient, HttpHeaders } from '@angular/common/http'; //HttpResponse was not here before
 import { Observable } from 'rxjs';
 import { User } from './user';
 import { Post } from './post';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,17 @@ export class DatabaseService {
   //URL of Spring MVC app
   readonly APP_URL: string = 'http://localhost:8080/FaceYourBookSpace';
 
+  readonly options = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   constructor(private http: HttpClient) { }
+
+  checkLogin(u: User): Observable<Object> {
+    return this.http.post(this.APP_URL + '/friends/login', JSON.stringify(u), this.options);
+  }
 
   //#region User methods
   getAllUsers(): Observable<Object> {
@@ -31,31 +39,16 @@ export class DatabaseService {
 
   //orignal: u: String is (u: User)
   registerNewUser(u: User): Observable<Object> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.post(this.APP_URL + '/friends/register', JSON.stringify(u), httpOptions);
+    return this.http.post(this.APP_URL + '/friends/register', JSON.stringify(u), this.options);
   }
 
   //new login method create by Poho
   loginValidation(u: User): Observable<Object> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.post(this.APP_URL + '/friends/login', JSON.stringify(u), httpOptions);
+    return this.http.post(this.APP_URL + '/friends/login', JSON.stringify(u), this.options);
   }
 
   updateUser(u: User): Observable<Object> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.put(this.APP_URL + '/friends/' + u.id, u, httpOptions);
+    return this.http.put(this.APP_URL + '/friends/' + u.Id, JSON.stringify(u), this.options);
   }
 
   deleteUser(id: number): Observable<Object> {
@@ -65,7 +58,7 @@ export class DatabaseService {
 
   //#region Post methods
   getAllPosts(): Observable<Object> {
-    return this.http.get(this.APP_URL + '/feed/');
+    return this.http.get(this.APP_URL + '/posts');
   }
 
   getAllPostsByUser(userId: number): Observable<Object> {
@@ -73,21 +66,11 @@ export class DatabaseService {
   }
 
   createNewPost(userId: number, p: Post): Observable<Object> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.post(this.APP_URL + '/friends/' + userId + '/posts/', p, httpOptions);
+    return this.http.post(this.APP_URL + '/friends/' + userId + '/posts/', JSON.stringify(p), this.options);
   }
 
-  updatePostr(userId: number, p: Post): Observable<Object> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.put(this.APP_URL + '/friends/' + userId + '/posts/' + p.id, p, httpOptions);
+  updatePost(userId: number, p: Post): Observable<Object> {
+    return this.http.put(this.APP_URL + '/friends/' + userId + '/posts/' + p.Id, JSON.stringify(p), this.options);
   }
 
   deletePost(userId: number, postId: number): Observable<Object> {
