@@ -6,15 +6,20 @@
         <div class='row'>
           <h5 style="color: #f44336;">{{user.first_name}}</h5>
           <button mat-icon-button (click)='toggleEdit()'>
-            <mat-icon color=accent>edit</mat-icon>
+            <mat-icon color=accent>settings</mat-icon>
           </button>
         </div>
         <div class='row'>
           <h6 class='pl-2 text-secondary'>{{user.username}}</h6>
         </div>
       </div>
-      <div class="col border border-light">
-        Content
+      <div class="col border border-light d-flex align-items-end">
+        <form [formGroup]="postGroup" class=''>
+          <mat-form-field>
+            <input matInput formControlName='postText' maxlength="250">
+          </mat-form-field>
+          <button mat-flat-button class='ml-1' color='warn' (click)='Post()'>Post</button>
+        </form>
       </div>
     </div>
   </div>

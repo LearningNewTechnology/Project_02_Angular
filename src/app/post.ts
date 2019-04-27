@@ -1,24 +1,18 @@
 import { Injectable } from '@angular/core';
+import { User } from './user';
+import { PostLike } from 'src/postLike';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class Post {
-
-    private user_id: number;
-    private content: string;
-    private id: number;
-
-    public get User_id(): number { return this.user_id; }
-    public get Content(): string { return this.content; }
-    public get Id(): number { return this.id; }
-
-    public set Content(content: string) { this.content = content; }
-
-    public setAll(user_id: number, content: string, id?: number): void {
-        this.user_id = user_id;
-        this.content = content;
-        this.id = id || 0;
-    }
+    public user_id: number;
+    public description: string;
+    public title: string;
+    public id: number;
+    public postLikes: Array<PostLike> = new Array<PostLike>();
+    public timestamp: any;
+    public comments: Array<any> = new Array<any>();
+    public friends: Array<User> = new Array<User>();
 }

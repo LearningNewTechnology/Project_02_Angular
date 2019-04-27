@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
             err => console.error('Login err: ', err),
             () => {
               if (msg.status === 0) {
-                console.log('Login Component User: ',userData);
                 this.authService.login(userData);
                 this.router.navigateByUrl('account');
               }
