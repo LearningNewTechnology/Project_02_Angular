@@ -9,14 +9,15 @@ import { DatabaseService } from '../database.service';
 export class PostFeedComponent implements OnInit {
 
   /**Feed of LOGGED IN USER posts only */
+  public posts: any;
 
   constructor(private db: DatabaseService) { }
 
   ngOnInit() {
     this.db.getAllPosts().subscribe(
-      data => console.log(data),
+      data => this.posts = data,
       err => console.error(err),
-      () => console.log('Success!')
+      ()=>console.log(this.posts)
     );
   }
 

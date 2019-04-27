@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; //HttpResponse w
 import { Observable } from 'rxjs';
 import { User } from './user';
 import { Post } from './post';
+import { PostLike } from 'src/postLike';
 
 @Injectable({
   providedIn: 'root'
@@ -37,12 +38,10 @@ export class DatabaseService {
     return this.http.get(this.APP_URL + '/friends/=' + username);
   }
 
-  //orignal: u: String is (u: User)
   registerNewUser(u: User): Observable<Object> {
     return this.http.post(this.APP_URL + '/friends/register', JSON.stringify(u), this.options);
   }
 
-  //new login method create by Poho
   loginValidation(u: User): Observable<Object> {
     return this.http.post(this.APP_URL + '/friends/login', JSON.stringify(u), this.options);
   }
@@ -65,16 +64,26 @@ export class DatabaseService {
     return this.http.get(this.APP_URL + '/friends/' + userId + '/posts/');
   }
 
-  createNewPost(userId: number, p: Post): Observable<Object> {
-    return this.http.post(this.APP_URL + '/friends/' + userId + '/posts/', JSON.stringify(p), this.options);
+  createNewPost(p: Post): Observable<Object> {
+    return this.http.post(this.APP_URL + '/posts', JSON.stringify(p), this.options);
   }
 
-  updatePost(userId: number, p: Post): Observable<Object> {
-    return this.http.put(this.APP_URL + '/friends/' + userId + '/posts/' + p.Id, JSON.stringify(p), this.options);
+  updatePost(p: Post): Observable<Object> {
+    return this.http.put(this.APP_URL + '/posts', JSON.stringify(p), this.options);
   }
 
-  deletePost(userId: number, postId: number): Observable<Object> {
-    return this.http.delete(this.APP_URL + '/friends/' + userId + '/posts/' + postId);
+  deletePost(postId: number): Observable<Object> {
+    return this.http.delete(this.APP_URL + '/posts/' + postId);
+  }
+  //#endregion
+
+  //#region PostLike methods
+  likePost(pl: PostLike): Observable<Object> {
+    return this.http.post(this.APP_URL + '/postlikes', JSON.stringify(pl), this.options);
+  }
+
+  unlikePost(pl: PostLike): Observable<Object> {
+    return this.http.delete(this.APP_URL + '/postlikes/' + pl.id);
   }
   //#endregion
 }
