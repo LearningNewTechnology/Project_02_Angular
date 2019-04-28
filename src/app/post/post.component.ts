@@ -1,11 +1,8 @@
-import { Component, OnInit, ViewChild, Input, OnDestroy, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material';
-import { post } from 'selenium-webdriver/http';
+import { PostLike } from '../postLike';
 import { DatabaseService } from '../database.service';
 import { Post } from '../post';
-import { Compiler_compileModuleSync__POST_R3__ } from '@angular/core/src/linker/compiler';
-import { PostLike } from 'src/postLike';
-import { pipe } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-post',
@@ -31,7 +28,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.likes = this.post.postLikes.length || 0;
-    if(this.post.friends[0] === JSON.parse(localStorage.getItem('USER'))){
+    if (this.post.friends[0] === JSON.parse(localStorage.getItem('USER'))) {
       this.disableLike = true;
     }
     for (let i = 0; i < this.post.postLikes.length; i++) {

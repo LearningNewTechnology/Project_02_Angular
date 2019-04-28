@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../user';
+import { AuthService } from '../auth.service';
 import { DatabaseService } from '../database.service';
-import { FormGroup, FormControl } from '@angular/forms';
 import { Post } from '../post';
+import { User } from '../user';
 
 @Component({
   selector: 'app-account',
@@ -28,7 +28,6 @@ export class AccountComponent implements OnInit {
       this.router.navigateByUrl('login');
     }
     this.user = JSON.parse(localStorage.getItem('USER'));
-    console.log(this.user);
   }
 
   public toggleEdit(): void {
@@ -41,8 +40,6 @@ export class AccountComponent implements OnInit {
 
     post.description = this.postGroup.value['postText'];
     post.friends.push(this.user);
-
-    console.log(post);
 
     this.db.createNewPost(post).subscribe(
       data => console.log(data),

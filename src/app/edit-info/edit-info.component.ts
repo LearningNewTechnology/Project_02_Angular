@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../database.service';
 import { User } from '../user';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit-info',
