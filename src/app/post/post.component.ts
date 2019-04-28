@@ -1,11 +1,8 @@
-import { Component, OnInit, ViewChild, Input, OnDestroy, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material';
-import { post } from 'selenium-webdriver/http';
+import { PostLike } from 'src/postLike';
 import { DatabaseService } from '../database.service';
 import { Post } from '../post';
-import { Compiler_compileModuleSync__POST_R3__ } from '@angular/core/src/linker/compiler';
-import { PostLike } from 'src/postLike';
-import { pipe } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-post',

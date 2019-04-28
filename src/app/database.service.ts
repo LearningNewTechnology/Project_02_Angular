@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //HttpResponse was not here before
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from './user';
-import { Post } from './post';
 import { PostLike } from 'src/postLike';
+import { Post } from './post';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'

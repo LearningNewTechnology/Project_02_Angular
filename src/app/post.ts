@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { User } from './user';
 import { PostLike } from 'src/postLike';
+import { User } from './user';
 
 @Injectable({
     providedIn: 'root'
