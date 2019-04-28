@@ -61,7 +61,7 @@ export class DatabaseService {
   }
 
   getAllPostsByUser(userId: number): Observable<Object> {
-    return this.http.get(this.APP_URL + '/friends/' + userId + '/posts/');
+    return this.http.get(this.APP_URL + '/posts/user/' + userId);
   }
 
   createNewPost(p: Post): Observable<Object> {
