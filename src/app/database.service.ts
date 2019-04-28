@@ -86,4 +86,9 @@ export class DatabaseService {
     return this.http.delete(this.APP_URL + '/postlikes/' + pl.id);
   }
   //#endregion
+
+  //#region UploadProfile methods
+
+
+  //#endregion
 }

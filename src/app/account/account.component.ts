@@ -6,6 +6,7 @@ import { DatabaseService } from '../database.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Post } from '../post';
 
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',

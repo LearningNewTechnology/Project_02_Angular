@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DatabaseService } from '../database.service';
 import { User } from '../user';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-info',
@@ -19,14 +20,31 @@ export class EditInfoComponent implements OnInit {
     email: new FormControl(''),
     username: new FormControl('')
   });
+  
+  selectedFile: File = null;
+  profileURL: String = null;
 
   
 
-  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User) { 
-   
-   
+  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User, private http: HttpClient) { 
+  }
 
 
+  onFileSelected(event) {
+    this.selectedFile = <File>event.target.files[0];
+  }
+
+  onUpload() {
+    this._currUser = JSON.parse(localStorage.getItem('USER'));
+    console.log(this._currUser.Username);
+    const fd = new FormData();
+    fd.append('file', this.selectedFile, this.selectedFile.name);
+    fd.append('username', 'jonsnow12')
+    console.log(fd)
+    this.http.post('http://localhost:8080/FaceYourBookSpace/profile_image/upload', fd).subscribe(res => {
+      this.profileURL = res[0];
+      console.log(this.profileURL);
+    });
   }
 
   ngOnInit() {
