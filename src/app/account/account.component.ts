@@ -28,6 +28,7 @@ export class AccountComponent implements OnInit {
       this.router.navigateByUrl('login');
     }
     this.user = JSON.parse(localStorage.getItem('USER'));
+    console.log(this.user);
   }
 
   public toggleEdit(): void {
@@ -38,9 +39,20 @@ export class AccountComponent implements OnInit {
     if (this.postGroup.invalid) { return; }
     let post: Post = new Post();
 
-    post.description = this.postGroup['postText'];
+    post.description = this.postGroup.value['postText'];
+    post.friends.push(this.user);
 
     console.log(post);
+
+    this.db.createNewPost(post).subscribe(
+      data => console.log(data),
+      err => console.error(err),
+      () => {
+        this.postGroup = new FormGroup({
+          postText: new FormControl('')
+        });
+      }
+    );
   }
 
 }

@@ -12,7 +12,7 @@
       <P>{{post?.description}}</P>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-icon-button (click)="Like()">
+      <button mat-icon-button (click)="Like()" [disabled]='disableLike'>
         <mat-icon>thumb_up</mat-icon>
       </button>{{likes}}
     </mat-card-actions>

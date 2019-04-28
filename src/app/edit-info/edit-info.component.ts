@@ -20,27 +20,27 @@ export class EditInfoComponent implements OnInit {
     username: new FormControl('')
   });
 
-  
 
-  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User) { 
-   
-   
+
+  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User) {
+
+
 
 
   }
 
   ngOnInit() {
-     //call the getUserById
-   this._currUser = JSON.parse(localStorage.getItem('USER'));
-        //this is from a tutorial, they put this in the constructor, don't know why
-        this.editGroup = this.fb.group({
-          first_name: [this._currUser.First_name], //call first_name getter
-          last_name: [this._currUser.Last_name], // call last_name getter
-          email: [this._currUser.Email],  // call email getter
-          username: [this._currUser.Username] // call username getter
-        });
+    //call the getUserById
+    this._currUser = JSON.parse(localStorage.getItem('USER'));
+    //this is from a tutorial, they put this in the constructor, don't know why
+    this.editGroup = this.fb.group({
+      first_name: [this._currUser.firstName], //call first_name getter
+      last_name: [this._currUser.lastName], // call last_name getter
+      email: [this._currUser.email],  // call email getter
+      username: [this._currUser.username] // call username getter
+    });
 
-      
+
   }
 
   Update() {
@@ -49,15 +49,15 @@ export class EditInfoComponent implements OnInit {
       return;
     }
 
-    this._currUser.First_name = this.editGroup.value.first_name; // call setter for first_name
-    this._currUser.Last_name = this.editGroup.value.last_name;// call setter for last_name
-    this._currUser.Email = this.editGroup.value.email;// call setter for email
-    this._currUser.Username = this.editGroup.value.username;// call setter for username
+    this._currUser.firstName = this.editGroup.value.first_name; // call setter for first_name
+    this._currUser.lastName = this.editGroup.value.last_name;// call setter for last_name
+    this._currUser.email = this.editGroup.value.email;// call setter for email
+    this._currUser.username = this.editGroup.value.username;// call setter for username
 
     this._db.updateUser(this._currUser).subscribe(
-      data=>console.log(data),
-      err=>console.error('Error occured: ', err),
-      ()=>console.log('Profile updated successfully.')
-      );
+      data => console.log(data),
+      err => console.error('Error occured: ', err),
+      () => console.log('Profile updated successfully.')
+    );
   }
 }

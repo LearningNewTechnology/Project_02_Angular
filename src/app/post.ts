@@ -7,7 +7,6 @@ import { PostLike } from 'src/postLike';
 })
 
 export class Post {
-    public user_id: number;
     public description: string;
     public title: string;
     public id: number;

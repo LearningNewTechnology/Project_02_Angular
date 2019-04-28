@@ -19,6 +19,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   @Input() public post: Post;
   public likes: number;
+  public disableLike: boolean = false;
   public picStyles = {
     'background-image': "url('assets/img/RainbowPls.gif')",
     'background-size': 'cover'
@@ -30,7 +31,13 @@ export class PostComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.likes = this.post.postLikes.length || 0;
-    console.log(this.pic.nativeElement.style);
+    if(this.post.friends[0] === JSON.parse(localStorage.getItem('USER'))){
+      this.disableLike = true;
+    }
+    for (let i = 0; i < this.post.postLikes.length; i++) {
+      if (this.post.postLikes[i].author === JSON.parse(localStorage.getItem('USER')).id)
+        this.thumb.color = 'warn';
+    }
     //this.picStyles["background-image"] = "url('"+url-from-aws+"')"
   }
 
