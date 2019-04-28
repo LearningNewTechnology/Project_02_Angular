@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../database.service';
 import { User } from '../user';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators'; 
 
 @Component({
   selector: 'app-edit-info',
@@ -12,51 +14,83 @@ import { User } from '../user';
 export class EditInfoComponent implements OnInit {
 
   public editSubmitted: boolean = false;
-  public editGroup: FormGroup = new FormGroup({
-    first_name: new FormControl(''),
-    last_name: new FormControl(''),
+ public editGroup: FormGroup = new FormGroup({
     email: new FormControl(''),
-    username: new FormControl('')
+    username: new FormControl(''),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    password: new FormControl('')
   });
 
+  public usernameValid: boolean = true;
+  public emailValid: boolean = true;
 
-
-  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User) {
-
-
-
-
+  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User) { 
+     
   }
 
   ngOnInit() {
     //call the getUserById
     this._currUser = JSON.parse(localStorage.getItem('USER'));
-    //this is from a tutorial, they put this in the constructor, don't know why
-    this.editGroup = this.fb.group({
-      first_name: [this._currUser.firstName], //call first_name getter
-      last_name: [this._currUser.lastName], // call last_name getter
-      email: [this._currUser.email],  // call email getter
-      username: [this._currUser.username] // call username getter
-    });
-
-
+    //let curId : Number = JSON.parse(localStorage.getItem('USER')).id;
+    this.editGroup.patchValue(this._currUser);
   }
 
   Update() {
-    console.log(this.editGroup.valid);
+    this.editSubmitted = true;
+   console.log(this.editGroup.valid);
     if (this.editGroup.invalid) {
       return;
     }
-
-    this._currUser.firstName = this.editGroup.value.first_name; // call setter for first_name
-    this._currUser.lastName = this.editGroup.value.last_name;// call setter for last_name
-    this._currUser.email = this.editGroup.value.email;// call setter for email
-    this._currUser.username = this.editGroup.value.username;// call setter for username
-
-    this._db.updateUser(this._currUser).subscribe(
-      data => console.log(data),
-      err => console.error('Error occured: ', err),
-      () => console.log('Profile updated successfully.')
+    let updateUser = new User();
+    updateUser.setAll(
+      this.editGroup.value.username,
+      this.editGroup.value.password,
+      this.editGroup.value.email,
+      this.editGroup.value.firstName,
+      this.editGroup.value.lastName,
+      JSON.parse(localStorage.getItem('USER')).id
     );
+    this.editGroup = this.fb.group(
+      {
+        email: [updateUser.email],//this._currUser.Email],  // call email getter
+        username: [updateUser.username], // call username getter
+        firstName: [updateUser.firstName], //call first_name_name getter
+        lastName: [updateUser.lastName], // call last_name getter
+       password: [updateUser.password]
+       
+      }
+      );
+    this._currUser = updateUser;
+    let msg: any;
+      this._db.updateUser(this._currUser).subscribe(
+      data=> msg = data,
+      err=>console.error('Error occured: ', err),
+      ()=>{
+        if (msg.status === 0) {
+          this.emailValid = true;
+          this.usernameValid = true;
+          console.log('message status: ', msg.status);
+          console.log('submit success');
+          alert('Profile Updated Successfully!');
+          this.editSubmitted = false;
+          localStorage.setItem('USER', JSON.stringify(this._currUser));
+        } else if (msg.status === 2) {
+          this.emailValid = false;
+          console.log('emailValid: ', this.emailValid);
+        } else if (msg.status === 7) {
+          this.usernameValid = false;
+          console.log('usernameValid: ', this.usernameValid);
+        }
+      }
+      );   
+  }
+
+  emailChange() {
+    this.emailValid = true;
+  }
+
+  usernameChange() {
+    this.usernameValid = true;
   }
 }
