@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //HttpResponse was not here before
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PostLike } from 'src/postLike';
+import { PostLike } from './postLike';
 import { Post } from './post';
 import { User } from './user';
 
@@ -83,7 +83,7 @@ export class DatabaseService {
   }
 
   unlikePost(pl: PostLike): Observable<Object> {
-    return this.http.delete(this.APP_URL + '/postlikes/' + pl.id);
+    return this.http.delete(this.APP_URL + '/postlikes/userid=' + pl.author.id + '&postid=' + pl.post.id);
   }
   //#endregion
 }

@@ -28,7 +28,6 @@ export class AccountComponent implements OnInit {
       this.router.navigateByUrl('login');
     }
     this.user = JSON.parse(localStorage.getItem('USER'));
-    console.log(this.user);
   }
 
   public toggleEdit(): void {
@@ -41,8 +40,6 @@ export class AccountComponent implements OnInit {
 
     post.description = this.postGroup.value['postText'];
     post.friends.push(this.user);
-
-    console.log(post);
 
     this.db.createNewPost(post).subscribe(
       data => console.log(data),
