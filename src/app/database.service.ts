@@ -47,7 +47,7 @@ export class DatabaseService {
   }
 
   updateUser(u: User): Observable<Object> {
-    return this.http.put(this.APP_URL + '/friends/' + u.Id, JSON.stringify(u), this.options);
+    return this.http.put(this.APP_URL + '/friends/', JSON.stringify(u), this.options);
   }
 
   deleteUser(id: number): Observable<Object> {
