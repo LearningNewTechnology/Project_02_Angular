@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
 
   Register() {
     this.requestSubmitted = this.pwdMatch = true;
-    console.log('Reg Group Valid?: ',this.registerGroup.valid);
+    console.log('Reg Group Valid?: ', this.registerGroup.valid);
     if (this.registerGroup.invalid) {
       return;
     }
@@ -58,14 +58,13 @@ export class RegisterComponent implements OnInit {
         data => msg = data, //original this is not commented out
         error => console.error(error),
         () => {
+          console.log('Status Code: ', msg.status);
           if (msg.status === 0) {
             this.emailValid = true;
             this.usernameValid = true;
-            console.log('message status: ', msg.status);
             console.log('submit success');
             this.Cancel();
           } else if (msg.status === 2) {
-            //console.log('Register Component User: ',registerUser);
             this.emailValid = false;
             console.log('emailValid: ', this.emailValid);
           } else if (msg.status === 7) {

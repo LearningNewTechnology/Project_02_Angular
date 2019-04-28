@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../database.service';
 import { User } from '../user';
@@ -53,11 +53,11 @@ export class EditInfoComponent implements OnInit {
     );
     this.editGroup = this.fb.group(
       {
-        email: [updateUser.Email],//this._currUser.Email],  // call email getter
-        username: [updateUser.Username], // call username getter
-        firstName: [updateUser.First_name], //call first_name_name getter
-        lastName: [updateUser.Last_name], // call last_name getter
-       password: [updateUser.Password]
+        email: [updateUser.email],//this._currUser.Email],  // call email getter
+        username: [updateUser.username], // call username getter
+        firstName: [updateUser.firstName], //call first_name_name getter
+        lastName: [updateUser.lastName], // call last_name getter
+       password: [updateUser.password]
        
       }
       );
