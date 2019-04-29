@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DatabaseService } from '../database.service';
+import { AuthService } from '../auth.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-reset-pwd',
@@ -10,12 +13,25 @@ import { Router } from '@angular/router';
 export class ResetPwdComponent implements OnInit {
 
   public requestSubmitted: boolean = false;
+  public showEmailGroup: boolean = true;
+  public showKeyGroup: boolean = false;
+  public showResetGroup: boolean = false;
+
+  public emailGroup: FormGroup = new FormGroup({
+    username: new FormControl(''),
+    email: new FormControl('')
+  });
+
+  public resetKeyGroup: FormGroup = new FormGroup({
+    input: new FormControl('')
+  });
+
   public resetPwdGroup: FormGroup = new FormGroup({
     newPwd: new FormControl(''),
     confirmPassword: new FormControl('')
   });
 
-  constructor(private router: Router) { }
+  constructor(private authService: AuthService, private user: User, private router: Router, private db: DatabaseService) { }
 
   ngOnInit() {
   }
@@ -32,8 +48,29 @@ export class ResetPwdComponent implements OnInit {
     this.router.navigateByUrl('login');
   }
 
+  public SendEmail() {
+    let user: any;
+    if (this.emailGroup.value['username'] === null) { return; } else {
+      this.db.getUserByUsername(this.emailGroup.value['username']).subscribe(
+        data => user = data,
+        err => console.error(err),
+        () => {
+          console.log(user);
+          this.db.sendEmail(user).subscribe(
+            data => console.log(data),
+            err => console.error(err)
+          );
+          ;
+        }
+      );
+
+
+    }
+  }
+
   public Cancel() {
     this.router.navigateByUrl('login');
   }
+
 
 }
