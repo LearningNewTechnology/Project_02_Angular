@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../user'; //modified by Poho
-import { DatabaseService } from '../database.service'; //modified by Poho
+import { User } from '../../classes/user'; //modified by Poho
+import { DatabaseService } from '../../services/database.service'; //modified by Poho
 
 @Component({
   selector: 'app-register',

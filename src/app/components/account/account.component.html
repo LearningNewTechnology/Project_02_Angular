@@ -4,7 +4,7 @@
       <div class='col-2'>
         <div class='row'> <img [src]='profilePicUrl' class="rounded-circle bg-light" height="128" width="128"></div>
         <div class='row mt-1' style="color: #f44336;">
-          <h5 class= 'pt-2' height='40'>{{user.firstName}}</h5>
+          <h5 class='pt-2' height='40'>{{user.firstName}}</h5>
           <button mat-icon-button class='ml-3' (click)='toggleEdit()'>
             <mat-icon color=accent>settings</mat-icon>
           </button>
@@ -13,10 +13,10 @@
           <h6 class='pl-2 text-secondary'>{{user.username}}</h6>
         </div>
       </div>
-      <div class="col border border-light d-flex align-items-end">
-        <form [formGroup]="postGroup" class=''>
+      <div class="col d-flex align-items-end">
+        <form [formGroup]="postGroup" class='text-light'>
           <mat-form-field>
-            <input matInput formControlName='postText' maxlength="250">
+            <input matInput placeholder="Make a post?" formControlName='postText' maxlength="250">
           </mat-form-field>
           <button mat-flat-button class='ml-1' color='warn' (click)='Post()'>Post</button>
         </form>
@@ -24,5 +24,21 @@
     </div>
   </div>
 </div>
-<app-post-feed *ngIf='!edit'></app-post-feed>
-<app-edit-info *ngIf='edit'></app-edit-info>
+<div class="col-9 mt-4 h-100 container justify-content-center bg-dark">
+  <mat-tab-group *ngIf='!edit'>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>public</mat-icon>Public Feed
+      </ng-template>
+      <app-public-feed ></app-public-feed>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>account_box</mat-icon>User Feed
+      </ng-template>
+      <app-post-feed></app-post-feed>
+    </mat-tab>
+  </mat-tab-group>
+
+  <app-edit-info *ngIf='edit'></app-edit-info>
+</div>

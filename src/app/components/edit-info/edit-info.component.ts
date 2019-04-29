@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatabaseService } from '../database.service';
-import { User } from '../user';
+import { DatabaseService } from '../../services/database.service';
+import { User } from '../../classes/user';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators'; 
 
