@@ -21,7 +21,8 @@ export class NavBarComponent implements OnInit {
           this.loggedin = this.authService.isLoggedIn();
           if (this.router.url === '/account') { this.isAccountPage = true; }
         },
-        (err) => { console.log(err); });
+        (err) => console.error(err)
+      );
   }
 
   public Logout(): void {

@@ -6,27 +6,29 @@
     <div class='pl-4 pr-5 align-items-center'>
       <form [formGroup]="editGroup">
         <mat-form-field style="width:100%;">
-          <input #FirstName matInput type="text" placeholder="First Name" formControlName="firstName" minlength="1" required/>
+          <input #FirstName matInput type="text" placeholder="First Name" formControlName="firstName" minlength="1"
+            required />
         </mat-form-field>
 
         <mat-form-field style="width:100%;">
-          <input #LastName matInput type="text" placeholder="Last Name" formControlName="lastName" minlength="1" required/>
+          <input #LastName matInput type="text" placeholder="Last Name" formControlName="lastName" minlength="1"
+            required />
         </mat-form-field>
 
         <mat-form-field style="width:100%;">
           <input #Email matInput type="email" placeholder="email@gmail.com" formControlName="email"
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (change)="emailChange()" required/>
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (change)="emailChange()" required />
           <!--Check that it has "@"-->
         </mat-form-field>
 
         <mat-form-field style="width:100%;">
           <input #Username matInput type="text" placeholder="Username" formControlName="username" minlength="8"
-            maxlength="12" (change)="usernameChange()" required/>
+            maxlength="12" (change)="usernameChange()" required />
         </mat-form-field>
 
-        
-          <input #Password type="hidden" formControlName="password"  />
-       
+
+        <input #Password type="hidden" formControlName="password" />
+
 
       </form>
       <a routerLink='reset'>Reset Password</a>
@@ -39,17 +41,21 @@
 
       <mat-error *ngIf="!usernameValid">Username already taken, enter new username</mat-error>
       <mat-error *ngIf="!emailValid">Email already taken, enter new email</mat-error>
-      
+
     </div>
     <mat-card-actions align="end">
       <button mat-raised-button [disabled]='this.editGroup.invalid' (click)="Update()" color='warn'>Save</button>
     </mat-card-actions>
   </mat-card>
-  <mat-card>
+  <mat-card class='mt-2'>
     <mat-card-header>
       <mat-card-title>Change Profile Picture</mat-card-title>
     </mat-card-header>
+    <mat-card-content>
       <input type="file" (change)="onFileSelected($event)">
-      <button type="button" (click)="onUpload()">Upload</button>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button (click)="onUpload()" color='warn'>Upload</button>
+    </mat-card-actions>
   </mat-card>
 </div>

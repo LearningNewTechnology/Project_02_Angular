@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../../classes/user'; //modified by Poho
-import { DatabaseService } from '../../services/database.service'; //modified by Poho
+import { User } from '../../classes/user';
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-register',
@@ -13,10 +13,8 @@ export class RegisterComponent implements OnInit {
   public requestSubmitted: boolean = false;
   public pwdMatch: boolean = true;
 
-  //new things added
   public usernameValid: boolean = true;
   public emailValid: boolean = true;
-  //up to here
 
   public registerGroup: FormGroup = new FormGroup({
     firstName: new FormControl(''),
@@ -35,7 +33,6 @@ export class RegisterComponent implements OnInit {
 
   Register() {
     this.requestSubmitted = this.pwdMatch = true;
-    console.log('Reg Group Valid?: ', this.registerGroup.valid);
     if (this.registerGroup.invalid) {
       return;
     }
@@ -58,22 +55,21 @@ export class RegisterComponent implements OnInit {
         data => msg = data, //original this is not commented out
         error => console.error(error),
         () => {
-          console.log('Status Code: ', msg.status);
+
           if (msg.status === 0) {
             this.emailValid = true;
             this.usernameValid = true;
-            console.log('submit success');
+
             this.Cancel();
           } else if (msg.status === 2) {
             this.emailValid = false;
-            console.log('emailValid: ', this.emailValid);
+
           } else if (msg.status === 7) {
             this.usernameValid = false;
-            console.log('usernameValid: ', this.usernameValid);
           }
         }
       );
-  } //end of Register method
+  } 
 
   public Cancel() {
     this.router.navigateByUrl('login');

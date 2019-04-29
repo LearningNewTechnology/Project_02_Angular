@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,13 +22,11 @@ export class ResetPwdComponent implements OnInit {
 
   ResetPwd(): void {
     this.requestSubmitted = true;
-    console.log(this.resetPwdGroup.valid);
     if (this.resetPwdGroup.invalid) {
       return;
     }
     let pwd: String = this.resetPwdGroup.value.newPwd;
 
-    console.log(pwd);
     this.router.navigateByUrl('login');
   }
 

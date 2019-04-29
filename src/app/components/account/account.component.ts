@@ -29,18 +29,18 @@ export class AccountComponent implements OnInit {
     }
     this.user = JSON.parse(localStorage.getItem('USER'));
 
-    if(localStorage.getItem('profile_image')){
+    if (localStorage.getItem('profile_image')) {
       this.profilePicUrl = localStorage.getItem('profile_image');
-    }else{
+    } else {
       this.db.getProfilePic(this.user.username).subscribe(
         res => {
-        this.profilePicUrl = res[0];
-      },
-      err=>console.error('Profile pic error: ', err),
-      ()=>{localStorage.setItem('profile_image', this.profilePicUrl);}
+          this.profilePicUrl = res[0];
+        },
+        err => console.error('Profile pic error: ', err),
+        () => { localStorage.setItem('profile_image', this.profilePicUrl); }
       );
     }
-  
+
   }
 
   public toggleEdit(): void {
@@ -55,7 +55,7 @@ export class AccountComponent implements OnInit {
     post.friends.push(this.user);
 
     this.db.createNewPost(post).subscribe(
-      data => console.log(data),
+      data => { },
       err => console.error(err),
       () => {
         this.postGroup = new FormGroup({

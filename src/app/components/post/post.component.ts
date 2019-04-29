@@ -40,7 +40,6 @@ export class PostComponent implements OnInit, OnDestroy {
       err=>console.error('Profile Pic on Post Error: ',err),
       ()=>this.picStyles["background-image"] = "url('"+this.url+"')"
     );
-    //this.picStyles["background-image"] = "url('"+url-from-aws+"')"
   }
 
   ngOnDestroy() {
