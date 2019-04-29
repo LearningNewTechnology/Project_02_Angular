@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DatabaseService } from '../../services/database.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../classes/user';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-reset-pwd',
@@ -23,7 +24,7 @@ export class ResetPwdComponent implements OnInit {
   });
 
   public resetKeyGroup: FormGroup = new FormGroup({
-    input: new FormControl('')
+    resetCode: new FormControl('')
   });
 
   public resetPwdGroup: FormGroup = new FormGroup({
@@ -36,13 +37,24 @@ export class ResetPwdComponent implements OnInit {
   ngOnInit() {
   }
 
-  ResetPwd(): void {
+  ResetPwd(user): void {
     this.requestSubmitted = true;
     if (this.resetPwdGroup.invalid) {
       return;
     }
+    let msg: any;
     let pwd: String = this.resetPwdGroup.value.newPwd;
-
+    user.password = pwd;
+    this.db.updateUser(user).subscribe(
+      data=> msg = data,
+      err=> console.error('Error Occurred: ', err),
+      () => {
+        if(msg.status === 0){
+          alert('Password Updated Successfully!');
+        }
+      }
+    );
+    
       //update password here
     console.log(pwd);
 
@@ -61,18 +73,21 @@ export class ResetPwdComponent implements OnInit {
             data => console.log(data),
             err => console.error(err)
           );
-          ;
+          
         }
       );
     }
+    this.showKeyGroup = true;
   }
-  public validateCode(){
+  public ValidateCode(){
     let user: any;
     this.db.validateCode(this.resetKeyGroup.value['input']).subscribe(
       data=> user,
       err => console.error(err),
       () => console.log(user)
     );
+    localStorage.setItem('USER', JSON.stringify(user));
+    this.showResetGroup = true;
   }
 
 

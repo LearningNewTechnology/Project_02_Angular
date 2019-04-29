@@ -18,34 +18,37 @@
           <button mat-raised-button color='warn' (click)="SendEmail()">Send Email</button>
         </form>
       </div>
-      <div class='pl-4 pr-5 align-items-center'>
-        <form [formGroup]="emailGroup">
-          <mat-form-field style="width:100%;">
-            <input matInput type="text" placeholder="Reset Code" formControlName="input" minlength="1" required />
-          </mat-form-field>
-          <button mat-raised-button color='warn' (click)="ValidateCode()">Submit</button>
-        </form>
+      <div *ngIf='showKeyGroup'>
+        <div class='pl-4 pr-5 align-items-center'>
+          <form [formGroup]="resetKeyGroup">
+            <mat-form-field style="width:100%;">
+              <input matInput type="text" placeholder="Reset Code" formControlName="resetCode" minlength="1" required />
+            </mat-form-field>
+            <button mat-raised-button color='warn' (click)="ValidateCode()">Submit</button>
+          </form>
+        </div>
+      </div>
+      <div *ngIf='showResetGroup'>
+        <div class='pl-4 pr-5 align-items-center'>
+          <form [formGroup]="resetPwdGroup">
+            <mat-form-field style="width:100%;">
+
+              <input #NewPwd matInput type="password" placeholder="Enter new password" formControlName="newPwd"
+                minlength="8" maxlength="12" required />
+            </mat-form-field>
+
+            <mat-form-field style="width:100%;">
+              <input #ConfirmPwd matInput type="password" placeholder="Confirm Password"
+                formControlName="confirmPassword" required />
+            </mat-form-field>
+          </form>
+        </div>
       </div>
 
-          <div class='pl-4 pr-5 align-items-center'>
-            <form [formGroup]="resetPwdGroup">
-              <mat-form-field style="width:100%;">
-
-                <input #NewPwd matInput type="password" placeholder="Enter new password" formControlName="newPwd"
-                  minlength="8" maxlength="12" required />
-              </mat-form-field>
-
-              <mat-form-field style="width:100%;">
-                <input #ConfirmPwd matInput type="password" placeholder="Confirm Password"
-                  formControlName="confirmPassword" required />
-              </mat-form-field>
-            </form>
-          </div>
-
-          <div *ngIf="requestSubmitted" style="color: red;">
-            <div *ngIf="resetPwdGroup.controls.newPwd.errors">Password should be at least 8 or more characters</div>
-            <div *ngIf="false">Password not match</div>
-            <!--change, modify later-->
-          </div>
-          <button mat-raised-button color='warn' (click)="ResetPwd()">Submit</button>
-          <button mat-raised-button (click)="Cancel()">Cancel</button>
+      <div *ngIf="requestSubmitted" style="color: red;">
+        <div *ngIf="resetPwdGroup.controls.newPwd.errors">Password should be at least 8 or more characters</div>
+        <div *ngIf="false">Password not match</div>
+        <!--change, modify later-->
+      </div>
+      <button mat-raised-button color='warn' (click)="ResetPwd()">Submit</button>
+      <button mat-raised-button (click)="Cancel()">Cancel</button>
