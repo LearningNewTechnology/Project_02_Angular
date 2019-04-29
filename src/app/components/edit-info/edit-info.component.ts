@@ -28,7 +28,7 @@ export class EditInfoComponent implements OnInit {
   public usernameValid: boolean = true;
   public emailValid: boolean = true;
 
-  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User, private http: HttpClient) { 
+  constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User) { 
   }
 
 
