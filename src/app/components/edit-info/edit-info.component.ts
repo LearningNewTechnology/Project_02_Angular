@@ -43,7 +43,13 @@ export class EditInfoComponent implements OnInit {
       res => {
         this.profileURL = res[0];
         localStorage.setItem('profile_image', this.profileURL);
-      });
+      },
+      err => console.error(err),
+      () => {
+        alert('Profile Updated Successfully!');
+        location.reload();
+      }
+    );
   }
 
   ngOnInit() {
@@ -53,7 +59,7 @@ export class EditInfoComponent implements OnInit {
 
   Update() {
     this.editSubmitted = true;
-    
+
     if (this.editGroup.invalid) {
       return;
     }
