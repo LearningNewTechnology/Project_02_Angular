@@ -49,6 +49,8 @@ export class EditInfoComponent implements OnInit {
       this.editGroup.value.email,
       this.editGroup.value.firstName,
       this.editGroup.value.lastName,
+      " ",
+      //JSON.parse(localStorage.getItem('USER')).salt,
       JSON.parse(localStorage.getItem('USER')).id
     );
     this.editGroup = this.fb.group(
