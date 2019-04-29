@@ -13,6 +13,7 @@ import { Subscriber } from 'rxjs';
 })
 export class ResetPwdComponent implements OnInit {
 
+  resetUser;
   public requestSubmitted: boolean = false;
   public showEmailGroup: boolean = true;
   public showKeyGroup: boolean = false;
@@ -37,20 +38,25 @@ export class ResetPwdComponent implements OnInit {
   ngOnInit() {
   }
 
-  ResetPwd(user): void {
+  ResetPwd(): void {
     this.requestSubmitted = true;
+    let _currUser: User = new User();
+    _currUser = this.resetUser;
+    console.log(_currUser);
     if (this.resetPwdGroup.invalid) {
       return;
     }
     let msg: any;
-    let pwd: String = this.resetPwdGroup.value.newPwd;
-    user.password = pwd;
-    this.db.updateUser(user).subscribe(
+    let pwd: string = this.resetPwdGroup.value.newPwd;
+    _currUser.password = pwd;
+    console.log(_currUser);
+    this.db.updateUser(_currUser).subscribe(
       data=> msg = data,
       err=> console.error('Error Occurred: ', err),
       () => {
         if(msg.status === 0){
           alert('Password Updated Successfully!');
+          this.router.navigateByUrl('login');
         }
       }
     );
@@ -81,13 +87,14 @@ export class ResetPwdComponent implements OnInit {
   }
   public ValidateCode(){
     let user: any;
-    this.db.validateCode(this.resetKeyGroup.value['input']).subscribe(
-      data=> user,
+    this.db.validateCode(this.resetKeyGroup.value['resetCode']).subscribe(
+      data=> user = data,
       err => console.error(err),
-      () => console.log(user)
+      () => {    this.resetUser = user;
+        this.showResetGroup = true;
+        console.log(this.resetUser);}
     );
-    localStorage.setItem('USER', JSON.stringify(user));
-    this.showResetGroup = true;
+
   }
 
 
