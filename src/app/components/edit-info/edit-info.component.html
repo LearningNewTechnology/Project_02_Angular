@@ -6,31 +6,40 @@
     <div class='pl-4 pr-5 align-items-center'>
       <form [formGroup]="editGroup">
         <mat-form-field style="width:100%;">
-          <input #FirstName matInput type="text" placeholder="First Name" formControlName="first_name" minlength="1" />
+          <input #FirstName matInput type="text" placeholder="First Name" formControlName="firstName" minlength="1" required/>
         </mat-form-field>
 
         <mat-form-field style="width:100%;">
-          <input #LastName matInput type="text" placeholder="Last Name" formControlName="last_name" minlength="1" />
+          <input #LastName matInput type="text" placeholder="Last Name" formControlName="lastName" minlength="1" required/>
         </mat-form-field>
 
         <mat-form-field style="width:100%;">
           <input #Email matInput type="email" placeholder="email@gmail.com" formControlName="email"
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" />
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (change)="emailChange()" required/>
           <!--Check that it has "@"-->
         </mat-form-field>
 
         <mat-form-field style="width:100%;">
           <input #Username matInput type="text" placeholder="Username" formControlName="username" minlength="8"
-            maxlength="12" />
+            maxlength="12" (change)="usernameChange()" required/>
         </mat-form-field>
+
+        
+          <input #Password type="hidden" formControlName="password"  />
+       
+
       </form>
       <a routerLink='reset'>Reset Password</a>
     </div>
 
     <div *ngIf="editSubmitted">
-      <mat-error *ngIf="registerGroup.controls.email.errors">Invalid Email</mat-error>
-      <mat-error *ngIf="registerGroup.controls.username.errors">Username should be at least 8 or more characters
+      <mat-error *ngIf="editGroup.controls.email.errors">Invalid Email</mat-error>
+      <mat-error *ngIf="editGroup.controls.username.errors">Username should be at least 8 or more characters
       </mat-error>
+
+      <mat-error *ngIf="!usernameValid">Username already taken, enter new username</mat-error>
+      <mat-error *ngIf="!emailValid">Email already taken, enter new email</mat-error>
+      
     </div>
     <mat-card-actions align="end">
       <button mat-raised-button [disabled]='this.editGroup.invalid' (click)="Update()" color='warn'>Save</button>

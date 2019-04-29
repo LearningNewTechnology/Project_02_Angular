@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //HttpResponse was not here before
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PostLike } from './postLike';
-import { Post } from './post';
-import { User } from './user';
+import { PostLike } from '../classes/postLike';
+import { Post } from '../classes/post';
+import { User } from '../classes/user';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class DatabaseService {
   }
 
   updateUser(u: User): Observable<Object> {
-    return this.http.put(this.APP_URL + '/friends/' + u.id, JSON.stringify(u), this.options);
+    return this.http.put(this.APP_URL + '/friends/', JSON.stringify(u), this.options);
   }
 
   deleteUser(id: number): Observable<Object> {
@@ -61,7 +61,7 @@ export class DatabaseService {
   }
 
   getAllPostsByUser(userId: number): Observable<Object> {
-    return this.http.get(this.APP_URL + '/friends/' + userId + '/posts/');
+    return this.http.get(this.APP_URL + '/posts/user/' + userId);
   }
 
   createNewPost(p: Post): Observable<Object> {
