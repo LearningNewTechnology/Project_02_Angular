@@ -25,6 +25,10 @@ export class DatabaseService {
     return this.http.post(this.APP_URL + '/friends/login', JSON.stringify(u), this.options);
   }
 
+  searchUsername(s: string): Observable<Object> {
+    return this.http.get(this.APP_URL + '/friends/search/=' + s);
+  }
+
   //#region User methods
   getAllUsers(): Observable<Object> {
     return this.http.get(this.APP_URL + '/friends');

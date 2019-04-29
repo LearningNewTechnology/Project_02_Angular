@@ -32,10 +32,10 @@ export class PostComponent implements OnInit, OnDestroy {
       this.disableLike = true;
     }
     for (let i = 0; i < this.post.postLikes.length; i++) {
-      if (this.post.postLikes[i].author === JSON.parse(localStorage.getItem('USER')).id)
+      if (this.post.postLikes[i].author.id === JSON.parse(localStorage.getItem('USER')).id)
         this.thumb.color = 'warn';
     }
-    //this.picStyles["background-image"] = "url('"+url-from-aws+"')"
+    //this.picStyles["background-image"] = "url('"+url-from-aws+"')";
   }
 
   ngOnDestroy() {

@@ -2,15 +2,6 @@
     <a class="navbar-brand" routerLink=''>
         <h3 id="PageTitle">FaceYourBookSpace</h3>
     </a>
-    <form *ngIf='loggedin'>
-        <mat-form-field>
-            <mat-icon matPrefix color="warn" class='pb-0'>search</mat-icon>
-            <input matInput>
-        </mat-form-field>
-
-        <button mat-flat-button matSuffix color="warn">Search</button>
-    </form>
-
 
     <span style=" flex: 1 1 auto;"></span>
     <button mat-button type="button" *ngIf='loggedin' [matMenuTriggerFor]="menu">
