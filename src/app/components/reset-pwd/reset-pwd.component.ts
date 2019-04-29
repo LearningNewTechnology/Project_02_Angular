@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatabaseService } from '../database.service';
-import { AuthService } from '../auth.service';
-import { User } from '../user';
+import { DatabaseService } from '../../services/database.service';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../classes/user';
 
 @Component({
   selector: 'app-reset-pwd',
@@ -43,7 +43,7 @@ export class ResetPwdComponent implements OnInit {
       return;
     }
     let pwd: String = this.resetPwdGroup.value.newPwd;
-
+      //update password here
     console.log(pwd);
     this.router.navigateByUrl('login');
   }
@@ -63,9 +63,10 @@ export class ResetPwdComponent implements OnInit {
           ;
         }
       );
-
-
     }
+  }
+  public validateCode(){
+
   }
 
   public Cancel() {
