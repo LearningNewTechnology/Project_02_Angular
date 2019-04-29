@@ -1,5 +1,3 @@
-import { User } from './app/user';
-import { Post } from './app/post';
 
 export class PostLike {
     public id: number;

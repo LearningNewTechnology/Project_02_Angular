@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../database.service';
 import { User } from '../user';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -24,7 +23,6 @@ export class EditInfoComponent implements OnInit {
   selectedFile: File = null;
   profileURL: String = null;
 
-  
 
   constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User, private http: HttpClient) { 
   }
@@ -36,7 +34,7 @@ export class EditInfoComponent implements OnInit {
 
   onUpload() {
     this._currUser = JSON.parse(localStorage.getItem('USER'));
-    console.log(this._currUser.Username);
+    console.log(this._currUser.username);
     const fd = new FormData();
     fd.append('file', this.selectedFile, this.selectedFile.name);
     fd.append('username', 'jonsnow12')
@@ -48,17 +46,17 @@ export class EditInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-     //call the getUserById
-   this._currUser = JSON.parse(localStorage.getItem('USER'));
-        //this is from a tutorial, they put this in the constructor, don't know why
-        this.editGroup = this.fb.group({
-          first_name: [this._currUser.First_name], //call first_name getter
-          last_name: [this._currUser.Last_name], // call last_name getter
-          email: [this._currUser.Email],  // call email getter
-          username: [this._currUser.Username] // call username getter
-        });
+    //call the getUserById
+    this._currUser = JSON.parse(localStorage.getItem('USER'));
+    //this is from a tutorial, they put this in the constructor, don't know why
+    this.editGroup = this.fb.group({
+      first_name: [this._currUser.firstName], //call first_name getter
+      last_name: [this._currUser.lastName], // call last_name getter
+      email: [this._currUser.email],  // call email getter
+      username: [this._currUser.username] // call username getter
+    });
 
-      
+
   }
 
   Update() {
@@ -67,15 +65,15 @@ export class EditInfoComponent implements OnInit {
       return;
     }
 
-    this._currUser.First_name = this.editGroup.value.first_name; // call setter for first_name
-    this._currUser.Last_name = this.editGroup.value.last_name;// call setter for last_name
-    this._currUser.Email = this.editGroup.value.email;// call setter for email
-    this._currUser.Username = this.editGroup.value.username;// call setter for username
+    this._currUser.firstName = this.editGroup.value.first_name; // call setter for first_name
+    this._currUser.lastName = this.editGroup.value.last_name;// call setter for last_name
+    this._currUser.email = this.editGroup.value.email;// call setter for email
+    this._currUser.username = this.editGroup.value.username;// call setter for username
 
     this._db.updateUser(this._currUser).subscribe(
-      data=>console.log(data),
-      err=>console.error('Error occured: ', err),
-      ()=>console.log('Profile updated successfully.')
-      );
+      data => console.log(data),
+      err => console.error('Error occured: ', err),
+      () => console.log('Profile updated successfully.')
+    );
   }
 }

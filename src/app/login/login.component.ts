@@ -35,14 +35,16 @@ export class LoginComponent implements OnInit {
     }
 
     let userData: User = new User();
+    let saltedPwd: string = '';
 
     this.db.getUserByUsername(this.loginGroup.value['username']).subscribe(
       (data) => {
-        userData.setAll(data['username'], this.loginGroup.value['password'], data['email'], data['firstName'], data['lastName'], data['id'], data['access_key'])
+        userData.setAll(data['username'], this.loginGroup.value['password'], data['email'], data['firstName'], data['lastName'], data['salt'], data['id'], data['access_key'])
+        saltedPwd = data['password'];
       },
       (err) => console.error('Error occured: ', err),
       () => {
-        if (userData.Id === 0) { this.userNotFound = true; }
+        if (userData.id === 0) { this.userNotFound = true; }
         if (this.loginGroup.value['username'] != userData['username']) {
           this.userNotFound = true;
         }
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit {
             err => console.error('Login err: ', err),
             () => {
               if (msg.status === 0) {
+                userData.password = saltedPwd;
                 this.authService.login(userData);
                 this.router.navigateByUrl('account');
               }
