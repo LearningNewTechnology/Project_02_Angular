@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material';
-import { PostLike } from '../postLike';
-import { DatabaseService } from '../database.service';
-import { Post } from '../post';
+import { PostLike } from '../../classes/postLike';
+import { DatabaseService } from '../../services/database.service';
+import { Post } from '../../classes/post';
 
 @Component({
   selector: 'app-post',

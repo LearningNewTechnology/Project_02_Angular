@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { DatabaseService } from '../database.service';
-import { Post } from '../post';
-import { User } from '../user';
-import { HttpClient } from '@angular/common/http';
-
+import { AuthService } from '../../services/auth.service';
+import { DatabaseService } from '../../services/database.service';
+import { Post } from '../../classes/post';
+import { User } from '../../classes/user';
 
 @Component({
   selector: 'app-account',
@@ -23,7 +21,7 @@ export class AccountComponent implements OnInit {
     postText: new FormControl('')
   });
 
-  constructor(private authService: AuthService, private router: Router, private db: DatabaseService, private http: HttpClient) { }
+  constructor(private authService: AuthService, private router: Router, private db: DatabaseService) { }
 
   ngOnInit() {
     if (!this.authService.isLoggedIn) {

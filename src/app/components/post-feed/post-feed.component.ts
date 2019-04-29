@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from '../database.service';
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-post-feed',

@@ -1,10 +1,10 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatabaseService } from '../database.service';
-import { User } from '../user';
-import { HttpClient } from '@angular/common/http';
-import { EventEmitter } from 'protractor';
+import { DatabaseService } from '../../services/database.service';
+import { User } from '../../classes/user';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators'; 
 
 @Component({
   selector: 'app-edit-info',
@@ -69,6 +69,8 @@ export class EditInfoComponent implements OnInit {
       this.editGroup.value.email,
       this.editGroup.value.firstName,
       this.editGroup.value.lastName,
+      " ",
+      //JSON.parse(localStorage.getItem('USER')).salt,
       JSON.parse(localStorage.getItem('USER')).id
     );
     this.editGroup = this.fb.group(
