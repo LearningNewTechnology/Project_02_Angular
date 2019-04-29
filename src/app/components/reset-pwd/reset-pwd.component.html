@@ -4,7 +4,7 @@
       <mat-card-title>Reset Password - WIP</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class='pl-4 pr-5 align-items-center'>
+      <div *ngIf='showEmailGroup' class='pl-4 pr-5 align-items-center'>
         <form [formGroup]="emailGroup">
           <mat-form-field style="width:100%;">
             <input #Email matInput type="email" placeholder="email@gmail.com" formControlName="email"
@@ -15,7 +15,7 @@
             <input #Username matInput type="text" placeholder="Username" formControlName="username" minlength="8"
               maxlength="12" (change)="usernameChange()" required />
           </mat-form-field>
-          <button mat-raised-button color='warn' (click)="SendEmail()">Send Email</button>
+
         </form>
       </div>
       <div *ngIf='showKeyGroup'>
@@ -24,7 +24,7 @@
             <mat-form-field style="width:100%;">
               <input matInput type="text" placeholder="Reset Code" formControlName="resetCode" minlength="1" required />
             </mat-form-field>
-            <button mat-raised-button color='warn' (click)="ValidateCode()">Submit</button>
+
           </form>
         </div>
       </div>
@@ -50,5 +50,12 @@
         <div *ngIf="false">Password not match</div>
         <!--change, modify later-->
       </div>
-      <button mat-raised-button color='warn' (click)="ResetPwd()">Submit</button>
-      <button mat-raised-button (click)="Cancel()">Cancel</button>
+    </mat-card-content>
+    <mat-card-actions align='end'>
+      <button *ngIf='showEmailGroup' mat-raised-button color='warn' (click)="SendEmail()">Send Email</button>
+      <button *ngIf='showKeyGroup' mat-raised-button color='warn' (click)="ValidateCode()">Submit</button>
+      <button *ngIf='showResetGroup' mat-raised-button color='warn' (click)="ResetPwd()">Submit</button>
+      <button *ngIf='showEmailGroup' mat-raised-button (click)="Cancel()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

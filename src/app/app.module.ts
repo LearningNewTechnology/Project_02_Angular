@@ -19,6 +19,7 @@ import { DatabaseService } from './services/database.service';
 import { PublicFeedComponent } from './components/public-feed/public-feed.component';
 import { SearchComponent } from './components/search/search.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SearchResultComponent } from './components/search-result/search-result.
     PostComponent,
     PublicFeedComponent,
     SearchComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

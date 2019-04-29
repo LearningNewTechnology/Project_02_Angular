@@ -13,7 +13,6 @@ import { Subscriber } from 'rxjs';
 })
 export class ResetPwdComponent implements OnInit {
 
-  resetUser;
   public requestSubmitted: boolean = false;
   public showEmailGroup: boolean = true;
   public showKeyGroup: boolean = false;
@@ -32,10 +31,14 @@ export class ResetPwdComponent implements OnInit {
     newPwd: new FormControl(''),
     confirmPassword: new FormControl('')
   });
+  private resetUser: any;
 
   constructor(private authService: AuthService, private user: User, private router: Router, private db: DatabaseService) { }
 
   ngOnInit() {
+    this.showEmailGroup = true;
+    this.showKeyGroup = false;
+    this.showResetGroup = false;
   }
 
   ResetPwd(): void {
@@ -51,17 +54,17 @@ export class ResetPwdComponent implements OnInit {
     _currUser.password = pwd;
     console.log(_currUser);
     this.db.updateUser(_currUser).subscribe(
-      data=> msg = data,
-      err=> console.error('Error Occurred: ', err),
+      data => msg = data,
+      err => console.error('Error Occurred: ', err),
       () => {
-        if(msg.status === 0){
+        if (msg.status === 0) {
           alert('Password Updated Successfully!');
           this.router.navigateByUrl('login');
         }
       }
     );
-    
-      //update password here
+
+    //update password here
     console.log(pwd);
 
     this.router.navigateByUrl('login');
@@ -79,20 +82,23 @@ export class ResetPwdComponent implements OnInit {
             data => console.log(data),
             err => console.error(err)
           );
-          
+
         }
       );
     }
     this.showKeyGroup = true;
+    this.showEmailGroup = false;
   }
-  public ValidateCode(){
+  public ValidateCode() {
     let user: any;
     this.db.validateCode(this.resetKeyGroup.value['resetCode']).subscribe(
-      data=> user = data,
+      data => user = data,
       err => console.error(err),
-      () => {    this.resetUser = user;
+      () => {
+        this.resetUser = user;
         this.showResetGroup = true;
-        console.log(this.resetUser);}
+        this.showKeyGroup = false;
+      }
     );
 
   }
