@@ -14,10 +14,10 @@ export class PostFeedComponent implements OnInit {
   constructor(private db: DatabaseService) { }
 
   ngOnInit() {
-    this.db.getAllPosts().subscribe(
+    this.db.getAllPostsByUser(JSON.parse(localStorage.getItem('USER')).id).subscribe(
       data => this.posts = data,
       err => console.error(err),
-      ()=>console.log(this.posts)
+      () => console.log(this.posts)
     );
   }
 
