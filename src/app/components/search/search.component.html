@@ -11,15 +11,8 @@
           <button mat-flat-button matSuffix color="warn" (click)="Search()">Search</button>
         </mat-form-field>
       </form>
-      <div *ngFor='let r of results'>
-        <mat-card>
-          <mat-card-header>
-            <div mat-card-avatar #ProfilePic class="bg-light" [ngStyle]=picStyles>
-            </div>
-            <mat-card-title color='warn'>{{r?.firstName}}</mat-card-title>
-            <mat-card-subtitle>{{r?.username}}</mat-card-subtitle>
-          </mat-card-header>
-        </mat-card>
+      <div *ngFor='let user of results'>
+        <app-search-result [user]='user'></app-search-result>
       </div>
       <div *ngIf="noResults">No users matching search</div>
     </mat-card-content>

@@ -17,8 +17,9 @@ export class PostComponent implements OnInit, OnDestroy {
   @Input() public post: Post;
   public likes: number;
   public disableLike: boolean = false;
+  public showPic: boolean = false;
   public picStyles = {
-    'background-image': "url('assets/img/RainbowPls.gif')",
+    'background-image': "url('')",
     'background-size': 'cover'
   };
   private postLike: PostLike = new PostLike();
@@ -27,6 +28,7 @@ export class PostComponent implements OnInit, OnDestroy {
   constructor(private db: DatabaseService) { }
 
   ngOnInit() {
+    this.showPic = false;
     this.likes = this.post.postLikes.length || 0;
     if (this.post.friends[0] === JSON.parse(localStorage.getItem('USER'))) {
       this.disableLike = true;
@@ -36,9 +38,12 @@ export class PostComponent implements OnInit, OnDestroy {
         this.thumb.color = 'warn';
     }
     this.db.getProfilePic(this.post.friends[0].username).subscribe(
-      data=>this.url=data[0],
-      err=>console.error('Profile Pic on Post Error: ',err),
-      ()=>this.picStyles["background-image"] = "url('"+this.url+"')"
+      data => this.url = data[0],
+      err => console.error('Profile Pic on Post Error: ', err),
+      () => {
+        this.showPic = true;
+        this.picStyles["background-image"] = "url('" + this.url + "')";
+      }
     );
   }
 
