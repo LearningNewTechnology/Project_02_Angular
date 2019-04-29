@@ -1,44 +1,51 @@
 <div class='col-4 pt-2 container'>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Reset Password - WIP</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Reset Password - WIP</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
       <div class='pl-4 pr-5 align-items-center'>
         <form [formGroup]="emailGroup">
-            <mat-form-field style="width:100%;">
-                <input #Email matInput type="email" placeholder="email@gmail.com" formControlName="email"
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (change)="emailChange()" required />
-                <!--Check that it has "@"-->
-              </mat-form-field>
-              <mat-form-field style="width:100%;">
-                  <input #Username matInput type="text" placeholder="Username" formControlName="username" minlength="8"
-                    maxlength="12" (change)="usernameChange()" required />
-                </mat-form-field>
-                <button mat-raised-button color='warn' (click)="sendEmail()">Send Email</button>
-      <div class='pl-4 pr-5 align-items-center'>
-        <form [formGroup]="resetPwdGroup">
           <mat-form-field style="width:100%;">
-  
-            <input #NewPwd matInput type="password" placeholder="Enter new password" formControlName="newPwd"
-              minlength="8" maxlength="12" required />
+            <input #Email matInput type="email" placeholder="email@gmail.com" formControlName="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (change)="emailChange()" required />
+            <!--Check that it has "@"-->
           </mat-form-field>
-  
           <mat-form-field style="width:100%;">
-            <input #ConfirmPwd matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword"
-              required />
+            <input #Username matInput type="text" placeholder="Username" formControlName="username" minlength="8"
+              maxlength="12" (change)="usernameChange()" required />
           </mat-form-field>
+          <button mat-raised-button color='warn' (click)="SendEmail()">Send Email</button>
         </form>
       </div>
-  
-      <div *ngIf="requestSubmitted" style="color: red;">
-        <div *ngIf="resetPwdGroup.controls.newPwd.errors">Password should be at least 8 or more characters</div>
-        <div *ngIf="false">Password not match</div>
-        <!--change, modify later-->
+      <div class='pl-4 pr-5 align-items-center'>
+        <form [formGroup]="emailGroup">
+          <mat-form-field style="width:100%;">
+            <input matInput type="text" placeholder="Reset Code" formControlName="input" minlength="1" required />
+          </mat-form-field>
+          <button mat-raised-button color='warn' (click)="ValidateCode()">Submit</button>
+        </form>
       </div>
-      <button mat-raised-button color='warn' (click)="ResetPwd()">Submit</button>
-      <button mat-raised-button (click)="Cancel()">Cancel</button>
-    </mat-card-content>
 
-    </mat-card>
-  </div>
+          <div class='pl-4 pr-5 align-items-center'>
+            <form [formGroup]="resetPwdGroup">
+              <mat-form-field style="width:100%;">
+
+                <input #NewPwd matInput type="password" placeholder="Enter new password" formControlName="newPwd"
+                  minlength="8" maxlength="12" required />
+              </mat-form-field>
+
+              <mat-form-field style="width:100%;">
+                <input #ConfirmPwd matInput type="password" placeholder="Confirm Password"
+                  formControlName="confirmPassword" required />
+              </mat-form-field>
+            </form>
+          </div>
+
+          <div *ngIf="requestSubmitted" style="color: red;">
+            <div *ngIf="resetPwdGroup.controls.newPwd.errors">Password should be at least 8 or more characters</div>
+            <div *ngIf="false">Password not match</div>
+            <!--change, modify later-->
+          </div>
+          <button mat-raised-button color='warn' (click)="ResetPwd()">Submit</button>
+          <button mat-raised-button (click)="Cancel()">Cancel</button>

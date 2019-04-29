@@ -91,5 +91,8 @@ export class DatabaseService {
   sendEmail(friend: User): Observable<Object> {
     return this.http.post(this.APP_URL + '/email/',  JSON.stringify(friend), this.options)
   }
+  validateCode(resetKey: String): Observable<Object> {
+    return this.http.get(this.APP_URL + '/friends/reset/'+ resetKey);
+  }
   //#endregion
 }

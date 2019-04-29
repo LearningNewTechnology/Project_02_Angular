@@ -66,8 +66,14 @@ export class ResetPwdComponent implements OnInit {
     }
   }
   public validateCode(){
-
+    let user: any;
+    this.db.validateCode(this.resetKeyGroup.value['input']).subscribe(
+      data=> user,
+      err => console.error(err),
+      () => console.log(user)
+    );
   }
+
 
   public Cancel() {
     this.router.navigateByUrl('login');
