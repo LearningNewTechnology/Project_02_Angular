@@ -45,14 +45,12 @@ export class ResetPwdComponent implements OnInit {
     this.requestSubmitted = true;
     let _currUser: User = new User();
     _currUser = this.resetUser;
-    console.log(_currUser);
     if (this.resetPwdGroup.invalid) {
       return;
     }
     let msg: any;
     let pwd: string = this.resetPwdGroup.value.newPwd;
     _currUser.password = pwd;
-    console.log(_currUser);
     this.db.updateUser(_currUser).subscribe(
       data => msg = data,
       err => console.error('Error Occurred: ', err),
@@ -64,9 +62,6 @@ export class ResetPwdComponent implements OnInit {
       }
     );
 
-    //update password here
-    console.log(pwd);
-
     this.router.navigateByUrl('login');
   }
 
@@ -77,9 +72,8 @@ export class ResetPwdComponent implements OnInit {
         data => user = data,
         err => console.error(err),
         () => {
-          console.log(user);
           this.db.sendEmail(user).subscribe(
-            data => console.log(data),
+            data => { },
             err => console.error(err)
           );
 
