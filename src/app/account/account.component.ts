@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { DatabaseService } from '../database.service';
 import { Post } from '../post';
 import { User } from '../user';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { User } from '../user';
 })
 export class AccountComponent implements OnInit {
 
-  public profilePicUrl: string = 'assets/img/RainbowPls.gif';
+  public profilePicUrl: string = localStorage.getItem('profile_image');
   public user: User;
   public edit: boolean = false;
   public postSubmitted: boolean = false;
@@ -22,13 +23,26 @@ export class AccountComponent implements OnInit {
     postText: new FormControl('')
   });
 
-  constructor(private authService: AuthService, private router: Router, private db: DatabaseService) { }
+  constructor(private authService: AuthService, private router: Router, private db: DatabaseService, private http: HttpClient) { }
 
   ngOnInit() {
     if (!this.authService.isLoggedIn) {
       this.router.navigateByUrl('login');
     }
     this.user = JSON.parse(localStorage.getItem('USER'));
+
+    if(localStorage.getItem('profile_image')){
+      this.profilePicUrl = localStorage.getItem('profile_image');
+    }else{
+      this.db.getProfilePic(this.user.username).subscribe(
+        res => {
+        this.profilePicUrl = res[0];
+      },
+      err=>console.error('Profile pic error: ', err),
+      ()=>{localStorage.setItem('profile_image', this.profilePicUrl);}
+      );
+    }
+  
   }
 
   public toggleEdit(): void {

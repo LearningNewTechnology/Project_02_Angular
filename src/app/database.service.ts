@@ -47,7 +47,7 @@ export class DatabaseService {
   }
 
   updateUser(u: User): Observable<Object> {
-    return this.http.put(this.APP_URL + '/friends/' + u.id, JSON.stringify(u), this.options);
+    return this.http.put(this.APP_URL + '/friends/', JSON.stringify(u), this.options);
   }
 
   deleteUser(id: number): Observable<Object> {
@@ -61,7 +61,7 @@ export class DatabaseService {
   }
 
   getAllPostsByUser(userId: number): Observable<Object> {
-    return this.http.get(this.APP_URL + '/friends/' + userId + '/posts/');
+    return this.http.get(this.APP_URL + '/posts/user/' + userId);
   }
 
   createNewPost(p: Post): Observable<Object> {
@@ -88,7 +88,12 @@ export class DatabaseService {
   //#endregion
 
   //#region UploadProfile methods
+  getProfilePic(username: string) : Observable<Object>{
+    return this.http.get(this.APP_URL + '/profile_image/?username=' + username);
+  }
 
-
+  uploadProfilePic(obj: Object): Observable<Object>{
+    return this.http.post(this.APP_URL + '/profile_image/upload', obj);
+  }
   //#endregion
 }
