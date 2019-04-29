@@ -42,12 +42,10 @@ export class ResetPwdComponent implements OnInit {
       return;
     }
     let pwd: String = this.resetPwdGroup.value.newPwd;
-<<<<<<< HEAD
+
       //update password here
     console.log(pwd);
-=======
 
->>>>>>> master
     this.router.navigateByUrl('login');
   }
 
