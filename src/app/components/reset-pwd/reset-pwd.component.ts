@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DatabaseService } from '../../services/database.service';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../classes/user';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-reset-pwd',
@@ -9,29 +13,94 @@ import { Router } from '@angular/router';
 })
 export class ResetPwdComponent implements OnInit {
 
+  resetUser;
   public requestSubmitted: boolean = false;
+  public showEmailGroup: boolean = true;
+  public showKeyGroup: boolean = false;
+  public showResetGroup: boolean = false;
+
+  public emailGroup: FormGroup = new FormGroup({
+    username: new FormControl(''),
+    email: new FormControl('')
+  });
+
+  public resetKeyGroup: FormGroup = new FormGroup({
+    resetCode: new FormControl('')
+  });
+
   public resetPwdGroup: FormGroup = new FormGroup({
     newPwd: new FormControl(''),
     confirmPassword: new FormControl('')
   });
 
-  constructor(private router: Router) { }
+  constructor(private authService: AuthService, private user: User, private router: Router, private db: DatabaseService) { }
 
   ngOnInit() {
   }
 
   ResetPwd(): void {
     this.requestSubmitted = true;
+    let _currUser: User = new User();
+    _currUser = this.resetUser;
+    console.log(_currUser);
     if (this.resetPwdGroup.invalid) {
       return;
     }
-    let pwd: String = this.resetPwdGroup.value.newPwd;
+    let msg: any;
+    let pwd: string = this.resetPwdGroup.value.newPwd;
+    _currUser.password = pwd;
+    console.log(_currUser);
+    this.db.updateUser(_currUser).subscribe(
+      data=> msg = data,
+      err=> console.error('Error Occurred: ', err),
+      () => {
+        if(msg.status === 0){
+          alert('Password Updated Successfully!');
+          this.router.navigateByUrl('login');
+        }
+      }
+    );
+    
+      //update password here
+    console.log(pwd);
 
     this.router.navigateByUrl('login');
   }
+
+  public SendEmail() {
+    let user: any;
+    if (this.emailGroup.value['username'] === null) { return; } else {
+      this.db.getUserByUsername(this.emailGroup.value['username']).subscribe(
+        data => user = data,
+        err => console.error(err),
+        () => {
+          console.log(user);
+          this.db.sendEmail(user).subscribe(
+            data => console.log(data),
+            err => console.error(err)
+          );
+          
+        }
+      );
+    }
+    this.showKeyGroup = true;
+  }
+  public ValidateCode(){
+    let user: any;
+    this.db.validateCode(this.resetKeyGroup.value['resetCode']).subscribe(
+      data=> user = data,
+      err => console.error(err),
+      () => {    this.resetUser = user;
+        this.showResetGroup = true;
+        console.log(this.resetUser);}
+    );
+
+  }
+
 
   public Cancel() {
     this.router.navigateByUrl('login');
   }
+
 
 }

@@ -14,6 +14,7 @@ export class User {
     public lastName: string;
     public id: number;
     public salt: string;
+    public resetkey: string;
     public access_key: string;
 
     public setAll(username: string, password: string, email: string, first_name: string, last_name: string, salt?: string, id?: number, access_key?: string): void {
