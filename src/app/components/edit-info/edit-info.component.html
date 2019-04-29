@@ -45,4 +45,11 @@
       <button mat-raised-button [disabled]='this.editGroup.invalid' (click)="Update()" color='warn'>Save</button>
     </mat-card-actions>
   </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Change Profile Picture</mat-card-title>
+    </mat-card-header>
+      <input type="file" (change)="onFileSelected($event)">
+      <button type="button" (click)="onUpload()">Upload</button>
+  </mat-card>
 </div>

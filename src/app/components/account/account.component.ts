@@ -13,7 +13,7 @@ import { User } from '../../classes/user';
 })
 export class AccountComponent implements OnInit {
 
-  public profilePicUrl: string = 'assets/img/RainbowPls.gif';
+  public profilePicUrl: string = localStorage.getItem('profile_image');
   public user: User;
   public edit: boolean = false;
   public postSubmitted: boolean = false;
@@ -28,6 +28,19 @@ export class AccountComponent implements OnInit {
       this.router.navigateByUrl('login');
     }
     this.user = JSON.parse(localStorage.getItem('USER'));
+
+    if(localStorage.getItem('profile_image')){
+      this.profilePicUrl = localStorage.getItem('profile_image');
+    }else{
+      this.db.getProfilePic(this.user.username).subscribe(
+        res => {
+        this.profilePicUrl = res[0];
+      },
+      err=>console.error('Profile pic error: ', err),
+      ()=>{localStorage.setItem('profile_image', this.profilePicUrl);}
+      );
+    }
+  
   }
 
   public toggleEdit(): void {

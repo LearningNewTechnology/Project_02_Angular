@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatabaseService } from '../../services/database.service';
 import { User } from '../../classes/user';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators'; 
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-edit-info',
@@ -21,12 +19,32 @@ export class EditInfoComponent implements OnInit {
     lastName: new FormControl(''),
     password: new FormControl('')
   });
+  
+  selectedFile: File = null;
+  profileURL: string = null;
 
   public usernameValid: boolean = true;
   public emailValid: boolean = true;
 
   constructor(private router: Router, private _db: DatabaseService, private fb: FormBuilder, private _currUser: User) { 
-     
+  }
+
+
+  onFileSelected(event) {
+    this.selectedFile = <File>event.target.files[0];
+  }
+
+  onUpload() {
+    this._currUser = JSON.parse(localStorage.getItem('USER'));
+    const fd = new FormData();
+    fd.append('file', this.selectedFile, this.selectedFile.name);
+    fd.append('username', this._currUser.username)
+    console.log(fd)
+    this._db.uploadProfilePic(fd).subscribe(
+      res => {
+      this.profileURL = res[0];
+      localStorage.setItem('profile_image', this.profileURL);
+    });
   }
 
   ngOnInit() {

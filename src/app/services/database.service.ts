@@ -90,4 +90,14 @@ export class DatabaseService {
     return this.http.delete(this.APP_URL + '/postlikes/userid=' + pl.author.id + '&postid=' + pl.post.id);
   }
   //#endregion
+
+  //#region UploadProfile methods
+  getProfilePic(username: string) : Observable<Object>{
+    return this.http.get(this.APP_URL + '/profile_image/?username=' + username);
+  }
+
+  uploadProfilePic(obj: Object): Observable<Object>{
+    return this.http.post(this.APP_URL + '/profile_image/upload', obj);
+  }
+  //#endregion
 }
