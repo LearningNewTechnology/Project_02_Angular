@@ -16,8 +16,7 @@ export class PostFeedComponent implements OnInit {
   ngOnInit() {
     this.db.getAllPostsByUser(JSON.parse(localStorage.getItem('USER')).id).subscribe(
       data => this.posts = data,
-      err => console.error(err),
-      () => console.log(this.posts)
+      err => console.error(err)
     );
   }
 

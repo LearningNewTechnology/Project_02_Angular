@@ -25,6 +25,10 @@ export class DatabaseService {
     return this.http.post(this.APP_URL + '/friends/login', JSON.stringify(u), this.options);
   }
 
+  searchUsername(s: string): Observable<Object> {
+    return this.http.get(this.APP_URL + '/friends/search/=' + s);
+  }
+
   //#region User methods
   getAllUsers(): Observable<Object> {
     return this.http.get(this.APP_URL + '/friends');
@@ -87,12 +91,22 @@ export class DatabaseService {
   }
   //#endregion
 
+
   //#region Jordan stuff
   sendEmail(friend: User): Observable<Object> {
-    return this.http.post(this.APP_URL + '/email/',  JSON.stringify(friend), this.options)
+    return this.http.post(this.APP_URL + '/email/',  JSON.stringify(friend), this.options);
   }
   validateCode(resetKey: String): Observable<Object> {
     return this.http.get(this.APP_URL + '/friends/reset/'+ resetKey);
+  }
+  //endregion
+  //#region UploadProfile methods
+  getProfilePic(username: string) : Observable<Object>{
+    return this.http.get(this.APP_URL + '/profile_image/?username=' + username);
+  }
+
+  uploadProfilePic(obj: Object): Observable<Object>{
+    return this.http.post(this.APP_URL + '/profile_image/upload', obj);
   }
   //#endregion
 }

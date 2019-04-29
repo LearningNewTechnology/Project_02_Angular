@@ -17,6 +17,7 @@ import { PostComponent } from './components/post/post.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatabaseService } from './services/database.service';
 import { PublicFeedComponent } from './components/public-feed/public-feed.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PublicFeedComponent } from './components/public-feed/public-feed.compon
     ResetPwdComponent,
     PostFeedComponent,
     PostComponent,
-    PublicFeedComponent
+    PublicFeedComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

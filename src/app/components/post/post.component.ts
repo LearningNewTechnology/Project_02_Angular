@@ -22,7 +22,7 @@ export class PostComponent implements OnInit, OnDestroy {
     'background-size': 'cover'
   };
   private postLike: PostLike = new PostLike();
-
+  private url: string;
 
   constructor(private db: DatabaseService) { }
 
@@ -32,10 +32,14 @@ export class PostComponent implements OnInit, OnDestroy {
       this.disableLike = true;
     }
     for (let i = 0; i < this.post.postLikes.length; i++) {
-      if (this.post.postLikes[i].author === JSON.parse(localStorage.getItem('USER')).id)
+      if (this.post.postLikes[i].author.id === JSON.parse(localStorage.getItem('USER')).id)
         this.thumb.color = 'warn';
     }
-    //this.picStyles["background-image"] = "url('"+url-from-aws+"')"
+    this.db.getProfilePic(this.post.friends[0].username).subscribe(
+      data=>this.url=data[0],
+      err=>console.error('Profile Pic on Post Error: ',err),
+      ()=>this.picStyles["background-image"] = "url('"+this.url+"')"
+    );
   }
 
   ngOnDestroy() {

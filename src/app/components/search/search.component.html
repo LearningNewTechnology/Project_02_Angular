@@ -1,0 +1,27 @@
+<div class="col-9 pt-2 container justify-content-center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Search Users</mat-card-title>
+    </mat-card-header>
+    <mat-card-content align='center'>
+      <form [formGroup]="searchGroup">
+        <mat-form-field class='my-0 w-75'>
+          <mat-icon color="warn">search</mat-icon>
+          <input matInput formControlName="param">
+          <button mat-flat-button matSuffix color="warn" (click)="Search()">Search</button>
+        </mat-form-field>
+      </form>
+      <div *ngFor='let r of results'>
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar #ProfilePic class="bg-light" [ngStyle]=picStyles>
+            </div>
+            <mat-card-title color='warn'>{{r?.firstName}}</mat-card-title>
+            <mat-card-subtitle>{{r?.username}}</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </div>
+      <div *ngIf="noResults">No users matching search</div>
+    </mat-card-content>
+  </mat-card>
+</div>

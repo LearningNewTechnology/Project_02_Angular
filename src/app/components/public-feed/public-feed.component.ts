@@ -16,8 +16,7 @@ export class PublicFeedComponent implements OnInit {
   ngOnInit() {
     this.db.getAllPosts().subscribe(
       data => this.posts = data,
-      err => console.error(err),
-      () => console.log(this.posts)
+      err => console.error(err)
     );
   }
 
