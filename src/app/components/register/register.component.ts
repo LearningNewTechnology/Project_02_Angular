@@ -52,6 +52,16 @@ export class RegisterComponent implements OnInit {
       this.registerGroup.value['lastName']
     );
 
+    let r = (Math.random()+1).toString(36).substring(7);
+    let charnum;
+    var username = this.registerGroup.value['username'];
+    var i = this.registerGroup.value['username'].length;
+    while (i--) {
+      charnum = username.charCodeAt(i);
+      r+= charnum;
+    }
+    registerUser.resetkey = r;
+
     let msg: any;
     this.db.registerNewUser(registerUser)
       .subscribe(
